@@ -1,12 +1,10 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import '../../features/custom_bottom_app_bar/models/custom_bottom_app_bar_icon_button_model.dart';
 import '../../features/custom_icon_button/view/custom_icon_button.dart';
 import '../../features/custom_loader/view/custom_loader.dart';
 import '../routes/app_routes.dart';
@@ -24,33 +22,27 @@ class CustomData extends GetxController {
   Duration baseAnimationDuration = const Duration(milliseconds: 400);
   Curve baseAnimationCurve = Curves.easeOut;
 
-  TextStyle titleTextStyle = const TextStyle(
-    fontSize: 18,
-    letterSpacing: 1.5,
-    wordSpacing: 2,
-    fontWeight: FontWeight.bold,
-  );
-
-  RxList<CustomBottomAppBarIconButtonModel> mainIconList = <CustomBottomAppBarIconButtonModel>[
-    CustomBottomAppBarIconButtonModel(
-      tag: Routes.tasks,
-      iconData: Icons.list,
-      iconColor: CustomColors.seasalt,
-      onPressed: () => Get.offNamed(Routes.tasks),
-    ),
-  ].obs;
+  TextStyle textStyleMain({Color color = CustomColors.mainWhite}) {
+    return GoogleFonts.poppins(
+      textStyle: TextStyle(
+        fontSize: 18,
+        color: color,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
 
   Widget get backButton => CustomIconButton(
-    tag: 'backButton',
-    iconData: Icons.arrow_back_outlined,
-    iconColor: CustomColors.seasalt,
-    onPressed: Get.back,
-  );
+        tag: 'backButton',
+        iconData: Icons.arrow_back_outlined,
+        iconColor: CustomColors.mainBlue,
+        onPressed: Get.back,
+      );
 
   Widget loader() {
     return const Center(
       child: CustomLoader(
-        color: CustomColors.seasalt,
+        color: CustomColors.mainBlue,
       ),
     );
   }
@@ -61,13 +53,13 @@ class CustomData extends GetxController {
       message,
       icon: error
           ? const Icon(
-        Icons.error,
-        color: CustomColors.eerieBlack,
-      )
+              Icons.error,
+              color: CustomColors.mainWhite,
+            )
           : const Icon(
-        Icons.check_circle,
-        color: CustomColors.eerieBlack,
-      ),
+              Icons.check_circle,
+              color: CustomColors.mainWhite,
+            ),
       maxWidth: 600,
       borderWidth: baseSpace / 2,
       isDismissible: true,
@@ -76,39 +68,19 @@ class CustomData extends GetxController {
         horizontal: baseSpace * 2,
       ),
       duration: const Duration(seconds: 5),
-      borderColor: CustomColors.eerieBlack,
-      colorText: CustomColors.eerieBlack,
-      backgroundColor: CustomColors.seasalt,
+      borderColor: CustomColors.mainBlue,
+      colorText: CustomColors.mainWhite,
+      backgroundColor: CustomColors.mainBlue,
       mainButton: TextButton(
         onPressed: () => Get.back(),
         child: const Text(
           'OK',
           style: TextStyle(
-            color: CustomColors.eerieBlack,
+            color: CustomColors.mainWhite,
           ),
         ),
       ),
       snackPosition: SnackPosition.TOP,
     );
-  }
-
-  void uploadImage({required Function(File file) onSelected, onAbort}) {
-    InputElement uploadInput = FileUploadInputElement() as InputElement..accept = 'image/*';
-
-    uploadInput.click();
-
-    uploadInput.onChange.listen((event) {
-      final file = uploadInput.files!.first;
-      final reader = FileReader();
-      reader.readAsDataUrl(file);
-
-      reader.addEventListener('click', (event) {});
-      reader.onLoadEnd.listen((event) {
-        onSelected(file);
-      });
-      reader.onAbort.listen((event) {
-        onAbort();
-      });
-    });
   }
 }

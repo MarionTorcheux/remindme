@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rive/rive.dart';
-
-import '../../../core/classes/theme_controller.dart';
+import 'package:remindme/core/classes/custom_colors.dart';
+import 'package:remindme/core/classes/unique_controllers.dart';
 import '../controllers/custom_text_form_field_controller.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -59,45 +58,66 @@ class CustomTextFormField extends StatelessWidget {
       tag: tag,
       permanent: true,
     );
-
     cc.initIsPassword(isPassword);
 
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxWidth: cc.maxWith,
       ),
-      child: Obx(
-            () => TextFormField(
-          focusNode: cc.focusNode,
-          keyboardType: keyboardType ?? TextInputType.text,
-          controller: controller,
-          enabled: enabled ?? true,
-          obscureText: cc.isObscure.value,
-          minLines: minLines ?? 1,
-          maxLines: unlimitedLines ?? false ? null : maxLines ?? 1,
-          onFieldSubmitted: onFieldSubmitted,
-          validator: (value) {
-            if (validator != null) {
-              return validator!(value);
-            } else if (validatorPattern != null) {
-              if (value!.isEmpty) {
-                return errorText ?? "Ce champs est vide";
-              } else if (!RegExp(validatorPattern!).hasMatch(value)) {
-                return errorText ?? "Ce champs est invalide";
-              }
-            } else {
-              if (value! == "" && isNullable == false) {
-                return errorText ?? "Ce champs est vide";
-              }
-            }
-
-            return null;
-          },
-          decoration: InputDecoration(
-            labelText: labelText,
-            hintText: hintText,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            labelText,
+            style: UniquesControllers().data.textStyleMain(),
           ),
-        ),
+          const SizedBox(height: 8), // Adjust the space between label and input
+          Obx(
+            () => PhysicalModel(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(10),
+              elevation: 3.0,
+              shadowColor: Colors.black,
+              child: TextFormField(
+                focusNode: cc.focusNode,
+                keyboardType: keyboardType ?? TextInputType.text,
+                controller: controller,
+                enabled: enabled ?? true,
+                obscureText: cc.isObscure.value,
+                minLines: minLines ?? 1,
+                maxLines: unlimitedLines ?? false ? null : maxLines ?? 1,
+                onFieldSubmitted: onFieldSubmitted,
+                validator: (value) {
+                  if (validator != null) {
+                    return validator!(value);
+                  } else if (validatorPattern != null) {
+                    if (value!.isEmpty) {
+                      return errorText ?? "Ce champ est vide";
+                    } else if (!RegExp(validatorPattern!).hasMatch(value)) {
+                      return errorText ?? "Ce champ est invalide";
+                    }
+                  } else {
+                    if (value! == "" && isNullable == false) {
+                      return errorText ?? "Ce champ est vide";
+                    }
+                  }
+
+                  return null;
+                },
+                decoration: InputDecoration(
+                  hintText: hintText,
+                  contentPadding: const EdgeInsets.all(16),
+                  filled: true,
+                  fillColor: CustomColors.mainWhite,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

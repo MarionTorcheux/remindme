@@ -28,7 +28,7 @@ class CustomIconButton extends StatelessWidget {
       ),
       icon: Icon(
         iconData,
-        color: iconColor ?? CustomColors.eerieBlack,
+        color: iconColor ??  CustomColors.mainBlue,
       ),
       onPressed: onPressed,
     );

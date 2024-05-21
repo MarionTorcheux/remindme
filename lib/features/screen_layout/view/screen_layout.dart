@@ -41,7 +41,7 @@ class ScreenLayout extends StatelessWidget {
           Visibility(
             visible: UniquesControllers().data.isInAsyncCall.value,
             child: Container(
-              color: CustomColors.eerieBlack.withOpacity(0.9),
+              color: CustomColors.mainBlue.withOpacity(0.9),
               width: Get.width,
               height: Get.height,
               child: const CustomLoader(),

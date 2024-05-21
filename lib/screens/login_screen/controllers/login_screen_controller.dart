@@ -6,11 +6,9 @@ import '../../../core/routes/app_routes.dart';
 
 class LoginScreenController extends GetxController {
   String pageTitle = 'Connexion';
-
   String emailTag = 'email';
   String emailLabel = 'Email';
   String emailError = 'Veuillez entrer une adresse mail valide';
-  String emailRiveAnimation = 'animations/envelop.riv';
   TextInputType emailInputType = TextInputType.emailAddress;
   TextEditingController emailController = TextEditingController();
 
@@ -18,7 +16,6 @@ class LoginScreenController extends GetxController {
   String passwordLabel = 'Mot de Passe';
   String passwordError = 'Veuillez entrer un mot de passe';
 
-  String passwordRiveAnimation = 'animations/lock.riv';
   TextInputType passwordInputType = TextInputType.visiblePassword;
   TextEditingController passwordController = TextEditingController();
 
@@ -27,15 +24,11 @@ class LoginScreenController extends GetxController {
   double maxWith = 350.0;
 
   String connectionTag = 'connection';
-  String connectionLabel = 'Connexion'.toUpperCase();
+  String connectionLabel = 'Connexion';
   IconData connectionIconData = Icons.login_outlined;
 
   String registerTag = 'register';
-  String registerLabel = 'Inscription'.toUpperCase();
-  IconData registerIconData = Icons.app_registration_outlined;
-
-  String dividerLabel = 'OU';
-  double dividerWidth = 250;
+  String registerLabel = 'Inscription';
 
   void passwordScreenOnPressed() {
     Get.toNamed(Routes.password);
@@ -58,9 +51,9 @@ class LoginScreenController extends GetxController {
           .data
           .firebaseAuth
           .signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+            email: emailController.text,
+            password: passwordController.text,
+          );
 
       UniquesControllers().getStorage.write('currentUserUID', user.user!.uid);
 
@@ -68,9 +61,8 @@ class LoginScreenController extends GetxController {
       Get.toNamed(Routes.tasks);
     } catch (e) {
       UniquesControllers().data.isInAsyncCall.value = false;
-      UniquesControllers()
-          .data
-          .snackbar('Erreur lors de la connexion', e.toString(), true);
+      UniquesControllers().data.snackbar('Erreur lors de la connexion',
+          'Email ou mot de passe invalide', true);
     }
   }
 

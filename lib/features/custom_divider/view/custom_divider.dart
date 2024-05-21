@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/classes/custom_colors.dart';
 import '../../../core/classes/unique_controllers.dart';
 import '../../../features/custom_divider/controllers/custom_divider_controller.dart';
 import 'package:get/get.dart';
@@ -39,7 +40,7 @@ class CustomDivider extends StatelessWidget {
         children: [
           Expanded(
             child: Divider(
-              color: dividerColor ?? cc.dividerColor,
+              color: dividerColor ??  CustomColors.mainBlue,
               thickness: dividerThickness ?? cc.dividerThickness,
             ),
           ),
@@ -52,14 +53,14 @@ class CustomDivider extends StatelessWidget {
               child: Text(
                 text!,
                 style: TextStyle(
-                  color: dividerTextColor ?? cc.dividerTextColor,
+                  color: dividerTextColor ??  CustomColors.mainBlue,
                 ),
               ),
             ),
           if (text != null)
             Expanded(
               child: Divider(
-                color: dividerColor ?? cc.dividerColor,
+                color: dividerColor ??  CustomColors.mainBlue,
                 thickness: dividerThickness ?? cc.dividerThickness,
               ),
             ),

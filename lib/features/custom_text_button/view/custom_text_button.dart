@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:remindme/core/classes/custom_colors.dart';
 
 import '../../../core/classes/theme_controller.dart';
 
@@ -8,6 +10,7 @@ class CustomTextButton extends StatelessWidget {
   final Color? color;
   final IconData? iconData;
   final Function() onPressed;
+  final double fontSize;
 
   const CustomTextButton({
     super.key,
@@ -16,6 +19,7 @@ class CustomTextButton extends StatelessWidget {
     this.color,
     this.iconData,
     required this.onPressed,
+    this.fontSize = 18.0,
   });
 
   @override
@@ -25,14 +29,17 @@ class CustomTextButton extends StatelessWidget {
     //   tag: tag,
     // );
 
-    final baseColor = color ?? ThemeController().customTheme.colorScheme.primary;
+    final baseColor = color ?? CustomColors.interaction;
 
     return TextButton(
-      onPressed: onPressed,
-      style: TextButton.styleFrom(
-        foregroundColor: baseColor, // Text color
-      ),
-      child: Text(text),
-    );
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          foregroundColor: baseColor, // Text color
+        ),
+        child: Text(
+          text,
+          style: GoogleFonts.poppins(
+              fontSize: fontSize, fontWeight: FontWeight.w600),
+        ));
   }
 }

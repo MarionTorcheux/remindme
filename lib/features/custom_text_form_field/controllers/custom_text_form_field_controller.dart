@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rive/rive.dart';
 
 class CustomTextFormFieldController extends GetxController {
-
   double maxWith = 350.0;
   RxBool isObscure = false.obs;
 
@@ -14,5 +12,4 @@ class CustomTextFormFieldController extends GetxController {
       isObscure.value = isPassword;
     }
   }
-
 }

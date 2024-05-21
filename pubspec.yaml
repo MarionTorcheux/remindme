@@ -19,6 +19,7 @@ dependencies:
   get:
   get_storage:
   rive:
+  file_picker:
 
   firebase_core: ^2.24.2
   firebase_core_web:
@@ -38,6 +39,10 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-      - assets/images/
-      - assets/animations/
+      - images/logintop.png
+      - images/registerTop.png
 
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: fonts/poppins.ttf

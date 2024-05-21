@@ -1,4 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:remindme/core/classes/custom_data.dart';
+import 'package:remindme/core/classes/unique_controllers.dart';
+
+import '../../../core/classes/custom_colors.dart';
 
 class CustomFABButton extends StatelessWidget {
   final String tag;
@@ -18,17 +24,20 @@ class CustomFABButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final CustomFABButtonController cc = Get.put(
-    //   CustomFABButtonController(),
-    //   tag: tag,
-    // );
-
     return FloatingActionButton.extended(
       heroTag: tag,
       onPressed: onPressed,
-      label: Text(text),
+      label: Text(text,
+          style: UniquesControllers()
+              .data
+              .textStyleMain(color: CustomColors.mainWhite)),
       backgroundColor: backgroundColor,
       icon: iconData != null ? Icon(iconData) : null,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      extendedPadding: const EdgeInsets.symmetric(horizontal: 130),
+      materialTapTargetSize: MaterialTapTargetSize.padded,
     );
   }
 }

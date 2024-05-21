@@ -1,5 +1,3 @@
-import 'dart:html' as html;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -23,13 +21,13 @@ class RegisterScreenController extends GetxController {
   String nameValidatorPattern = r'^[a-zA-Z]{2,}$';
   TextEditingController nameController = TextEditingController();
 
-
   String emailTag = 'register-email';
   String emailLabel = 'Email';
   String emailError = 'Veuillez entrer une adresse mail valide';
   IconData emailIconData = Icons.email_outlined;
   TextInputType emailInputType = TextInputType.emailAddress;
-  String emailValidatorPattern = r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$';
+  String emailValidatorPattern =
+      r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$';
   TextEditingController emailController = TextEditingController();
 
   String passwordTag = 'register-password';
@@ -55,8 +53,14 @@ class RegisterScreenController extends GetxController {
   }
 
   String registerTag = 'register';
-  String registerLabel = 'Inscription'.toUpperCase();
+  String registerLabel = 'Inscription';
   IconData registerIconData = Icons.app_registration_outlined;
+
+  // pickFiles() async {
+  //   final pickedFiles = await FilePicker.platform.pickFiles(
+  //     type: FileType.image,
+  //     allowMultiple: false,
+  //   );
 
   bool checkPasswordConfirmation() {
     if (passwordController.text == confirmPasswordController.text) {
@@ -75,33 +79,41 @@ class RegisterScreenController extends GetxController {
       UniquesControllers().data.isInAsyncCall.value = true;
 
       UniquesControllers().getStorage.write('email', emailController.text);
-      UniquesControllers().getStorage.write('password', passwordController.text);
+      UniquesControllers()
+          .getStorage
+          .write('password', passwordController.text);
 
-      final user = await UniquesControllers().data.firebaseAuth.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+      final user = await UniquesControllers()
+          .data
+          .firebaseAuth
+          .createUserWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text,
+          );
 
-
-      await UniquesControllers().data.firebaseFirestore.collection('lister').doc(user.user!.uid).set(
+      await UniquesControllers()
+          .data
+          .firebaseFirestore
+          .collection('user')
+          .doc(user.user!.uid)
+          .set(
         {
           'name': nameController.text,
           'email': emailController.text,
         },
       );
 
-
       UniquesControllers().data.isInAsyncCall.value = false;
 
       Get.toNamed(Routes.login);
 
-      UniquesControllers().data.snackbar('Inscription réussie',
-          '   ${nameController.text} !', false);
+      UniquesControllers().data.snackbar(
+          'Inscription réussie', '   ${nameController.text} !', false);
     } catch (e) {
       UniquesControllers().data.isInAsyncCall.value = false;
-      UniquesControllers().data.snackbar('Erreur lors de la connexion', e.toString(), true);
+      UniquesControllers()
+          .data
+          .snackbar('Erreur lors de la connexion', e.toString(), true);
     }
   }
-
-
 }
