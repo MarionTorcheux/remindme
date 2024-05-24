@@ -28,9 +28,10 @@ class ScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-          () => Stack(
+      () => Stack(
         children: [
           Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: appBar,
             bottomNavigationBar: bottomNavigationBar,
             floatingActionButton: floatingActionButton,

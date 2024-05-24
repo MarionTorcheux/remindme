@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/classes/custom_colors.dart';
@@ -59,12 +61,27 @@ class RegisterScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(70),
                           elevation: 3.0,
                           shadowColor: Colors.black,
-                          child: const CircleAvatar(
-                            radius: 70,
-                            backgroundColor: CustomColors.mainWhite,
+                          child: Obx(
+                            () => CircleAvatar(
+                              radius: 70,
+                              backgroundColor: CustomColors.mainWhite,
+                              backgroundImage: cc
+                                      .selectedImagePath.value.isNotEmpty
+                                  ? FileImage(File(cc.selectedImagePath.value))
+                                  : null,
+                              child: cc.selectedImagePath.value.isNotEmpty
+                                  ? null
+                                  : CustomIconButton(
+                                      tag: "register-picture",
+                                      iconData: Icons.add_a_photo_outlined,
+                                      onPressed: () {
+                                        cc.pickFiles();
+                                      },
+                                    ),
+                            ),
                           ),
                         ),
-                        const CustomSpace(heightMultiplier: 1),
+                        const CustomSpace(heightMultiplier: 2),
                         const Text(
                           'Photo de profil',
                           style: TextStyle(

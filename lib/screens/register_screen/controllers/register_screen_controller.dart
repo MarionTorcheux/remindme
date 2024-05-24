@@ -1,12 +1,17 @@
+import 'dart:io';
+import 'package:path/path.dart' as path;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:remindme/core/classes/controller_mixin.dart';
 
 import '../../../core/classes/unique_controllers.dart';
 import '../../../core/routes/app_routes.dart';
 
-class RegisterScreenController extends GetxController {
+class RegisterScreenController extends GetxController with ControllerMixin {
   String pageTitle = 'Inscription'.toUpperCase();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -48,6 +53,8 @@ class RegisterScreenController extends GetxController {
   RxBool isConfirmedPassword = true.obs;
   RxBool isPressedRegisterButton = false.obs;
 
+  RxString selectedImagePath = ''.obs;
+
   void loginScreenOnPressed() {
     Get.toNamed(Routes.login);
   }
@@ -55,12 +62,6 @@ class RegisterScreenController extends GetxController {
   String registerTag = 'register';
   String registerLabel = 'Inscription';
   IconData registerIconData = Icons.app_registration_outlined;
-
-  // pickFiles() async {
-  //   final pickedFiles = await FilePicker.platform.pickFiles(
-  //     type: FileType.image,
-  //     allowMultiple: false,
-  //   );
 
   bool checkPasswordConfirmation() {
     if (passwordController.text == confirmPasswordController.text) {
@@ -91,6 +92,17 @@ class RegisterScreenController extends GetxController {
             password: passwordController.text,
           );
 
+      String defaultAvatar =
+          "https://firebasestorage.googleapis.com/v0/b/remindme-dc6a8.appspot.com/o/avatars%2FuserDefault.png?alt=media&token=da8ea2dc-7069-43f6-b4e4-94496912d4cf";
+
+      String imageUrl = '';
+
+      if (file.path != '') {
+        imageUrl = await uploadImage(file, user.user!.uid);
+      } else {
+        imageUrl = defaultAvatar;
+      }
+
       await UniquesControllers()
           .data
           .firebaseFirestore
@@ -98,6 +110,7 @@ class RegisterScreenController extends GetxController {
           .doc(user.user!.uid)
           .set(
         {
+          'avatarUrl': imageUrl,
           'name': nameController.text,
           'email': emailController.text,
         },
@@ -116,4 +129,105 @@ class RegisterScreenController extends GetxController {
           .snackbar('Erreur lors de la connexion', e.toString(), true);
     }
   }
+
+  Future<String> uploadImage(File file, String userId) async {
+    final List<Future<String>> uploadTasks = [];
+    String url = '';
+    List<String> imageListLocalPath = <String>[];
+    try {
+      imageListLocalPath.add(file.path);
+
+      final fileName = path.basename(file.path);
+      final destination = '$destinationStorage/$userId/$fileName';
+
+      final uploadTask = firebaseStorage.ref(destination).putFile(file);
+      uploadTasks.add(uploadTask.then((taskSnapshot) async {
+        final downloadUrl = await taskSnapshot.ref.getDownloadURL();
+
+        url = downloadUrl;
+        return downloadUrl;
+      }));
+
+      await Future.wait(uploadTasks);
+    } catch (e) {
+      UniquesControllers()
+          .data
+          .snackbar('Erreur lors de l\'upload de l\'image', e.toString(), true);
+    }
+    return url;
+  }
+
+  //TODO SELECTION DE LA PHOTO DE PROFILE
+  String deleteImageTag = 'delete-image';
+  String destinationStorage = 'avatars';
+  final firebaseStorage = FirebaseStorage.instance;
+  RxBool isPickedFile = false.obs;
+  File file = File('');
+
+  void pickFiles() async {
+    try {
+      FilePickerResult? result =
+          await FilePicker.platform.pickFiles(type: FileType.image);
+
+      if (result != null) {
+        // Récupérer le chemin de l'image sélectionnée depuis le fichier
+        String imagePath = result.files.single.path ?? '';
+
+        // Mettre à jour selectedImagePath avec le chemin de l'image
+        selectedImagePath.value = imagePath;
+      } else {
+        // L'utilisateur a annulé la sélection de fichier
+        // Gérer le cas d'annulation si nécessaire
+      }
+
+      if (result != null) {
+        if (result.files.single.path != null) {
+          file = File(result.files.single.path!);
+          isPickedFile.value = false;
+
+          isPickedFile.value = true;
+        }
+      }
+    } catch (e) {
+      // Gérer les erreurs éventuelles lors de la sélection de fichier
+      print('Erreur lors de la sélection de fichier : $e');
+    }
+  }
+
+  // void pickFiles() async {
+  //   try {
+  //     FilePickerResult? result =
+  //     await FilePicker.platform.pickFiles(type: FileType.image);
+  //
+  //     if (result != null) {
+  //       // Récupérer le chemin de l'image sélectionnée depuis le fichier
+  //       String imagePath = result.files.single.path ?? '';
+  //
+  //       // Mettre à jour selectedImagePath avec le chemin de l'image
+  //       selectedImagePath.value = imagePath;
+  //     } else {
+  //       // L'utilisateur a annulé la sélection de fichier
+  //       // Gérer le cas d'annulation si nécessaire
+  //     }
+  //   } catch (e) {
+  //     // Gérer les erreurs éventuelles lors de la sélection de fichier
+  //     print('Erreur lors de la sélection de fichier : $e');
+  //   }
+  // }
+
+  // pickFiles() async {
+  //   final pickedFiles = await FilePicker.platform.pickFiles(
+  //     type: FileType.image,
+  //     allowMultiple: false,
+  //   );
+  //
+  //   if (pickedFiles != null) {
+  //     if (pickedFiles.files.single.path != null) {
+  //       file = File(pickedFiles.files.single.path!);
+  //       isPickedFile.value = false;
+  //
+  //       isPickedFile.value = true;
+  //     }
+  //   }
+  // }
 }

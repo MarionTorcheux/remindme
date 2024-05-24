@@ -58,7 +58,7 @@ class LoginScreenController extends GetxController {
       UniquesControllers().getStorage.write('currentUserUID', user.user!.uid);
 
       UniquesControllers().data.isInAsyncCall.value = false;
-      Get.toNamed(Routes.tasks);
+      Get.toNamed(Routes.lists);
     } catch (e) {
       UniquesControllers().data.isInAsyncCall.value = false;
       UniquesControllers().data.snackbar('Erreur lors de la connexion',

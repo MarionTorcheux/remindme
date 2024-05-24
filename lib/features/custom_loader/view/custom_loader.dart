@@ -2,6 +2,8 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
+import '../../../core/classes/custom_colors.dart';
+
 class CustomLoader extends StatelessWidget {
   final double? size;
   final Color? color;
@@ -23,9 +25,10 @@ class CustomLoader extends StatelessWidget {
         child: SizedBox(
           width: size ?? 120,
           height: size ?? 120,
-          child: const RiveAnimation.asset(
-            'animations/loader.riv',
-            antialiasing: true,
+          child: material.Icon(
+            Icons.refresh,
+            size: size ?? 120,
+            color: CustomColors.mainWhite,
           ),
         ),
       ),

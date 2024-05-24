@@ -1,5 +1,10 @@
 import 'package:get/get.dart';
+import 'package:remindme/screens/history_screen/view/history_screen.dart';
+import 'package:remindme/screens/list_detail_screen/view/list_detail_screen.dart';
+import 'package:remindme/screens/profile_screen/view/profile_screen.dart';
 import 'package:remindme/screens/register_screen/view/register_screen.dart';
+import 'package:remindme/screens/shared_lists_screen/view/shared_lists_screen.dart';
+import '../../screens/lists_screen/view/lists_screen.dart';
 import '../../screens/password_screen/view/password_screen.dart';
 import 'app_routes.dart';
 
@@ -27,6 +32,26 @@ class AppScreens {
     GetPage(
       name: RoutePaths.password,
       page: () => const PasswordScreen(),
+    ),
+    GetPage(
+      name: RoutePaths.lists,
+      page: () => const ListsScreen(),
+    ),
+    GetPage(
+      name: RoutePaths.profile,
+      page: () => const ProfileScreen(),
+    ),
+    GetPage(
+      name: RoutePaths.sharedlists,
+      page: () => const SharedListsScreen(),
+    ),
+    GetPage(
+      name: RoutePaths.history,
+      page: () => const HistoryScreen(),
+    ),
+    GetPage(
+      name: RoutePaths.listdetail,
+      page: () => const ListDetailScreen(),
     ),
   ];
 }

@@ -9,14 +9,14 @@ class ThemeController extends GetxController {
         useMaterial3: true,
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
-          primary: CustomColors.mainBlue,
+          primary: CustomColors.mainWhite,
           onPrimary: CustomColors.mainWhite,
-          secondary: CustomColors.mainBlue,
-          onSecondary: CustomColors.mainBlue,
-          error: CustomColors.mainBlue,
-          onError: CustomColors.mainBlue,
-          surface: CustomColors.mainBlue,
-          onSurface: CustomColors.mainBlue,
+          secondary: CustomColors.mainWhite,
+          onSecondary: CustomColors.mainWhite,
+          error: CustomColors.mainWhite,
+          onError: CustomColors.interaction,
+          surface: CustomColors.mainWhite,
+          onSurface: CustomColors.darkBlue,
         ),
         textTheme: const TextTheme(
           displayLarge:
@@ -57,7 +57,7 @@ class ThemeController extends GetxController {
           bodyMedium: TextStyle(
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w600,
-            letterSpacing: 0,
+            letterSpacing: 0.7,
           ),
           bodySmall: TextStyle(
             fontFamily: 'Poppins',

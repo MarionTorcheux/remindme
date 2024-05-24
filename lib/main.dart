@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:remindme/firebase_options.dart';
 
-
+import 'core/classes/theme_controller.dart';
 import 'core/routes/app_screens.dart';
 
 Future<void> main() async {
@@ -26,6 +26,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      theme: ThemeController().customTheme,
       locale: const Locale('fr', 'FR'),
       debugShowCheckedModeBanner: false,
       title: 'RemindMe',
