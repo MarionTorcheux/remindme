@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:remindme/core/models/taskModel.dart';
 import 'package:remindme/features/custom_app_bar/view/custom_app_bar.dart';
 import 'package:remindme/features/custom_space/view/custom_space.dart';
 
@@ -27,7 +26,10 @@ class ListsScreen extends StatelessWidget {
     return ScreenLayout(
       appBar: CustomAppBar(
         title: 'Mes listes',
-        onPressed: () {},
+        onPressed: () {
+          cc.nameController.clear();
+          cc.openBottomSheet("Ajouter une liste");
+        },
         isautomaticallyImplyLeading: false,
         iconData: Icons.add,
       ),
@@ -63,36 +65,32 @@ class ListsScreen extends StatelessWidget {
                           crossAxisCount: 2,
                           crossAxisSpacing: 8.0,
                           mainAxisSpacing: 8.0,
-                          childAspectRatio: 0.75, // Adjust ratio as needed
+                          childAspectRatio: 0.60,
                         ),
                         itemCount: cc.lists.length,
                         itemBuilder: (context, index) {
+                          final list = cc.lists[index];
                           return InkWell(
                             onTap: () {
-                              // Your onTap function here
-                              // For example, navigate to detail screen or show a dialog
-                              print('Card tapped: ${cc.lists[index].id}');
-                              print('${cc.lists[index].tasks}');
+                              print('Card tapped: ${list.id}');
+                              print('${list.tasks}');
                               Get.toNamed(Routes.listDetail, arguments: {
-                                'listId': cc.lists[index].id,
-                                'listName': cc.lists[index].name,
-                                'listImageUrl': cc.lists[index].imageUrl,
-                                'listTasks': cc.lists[index].tasks,
-                                'taskState': cc.lists[index].tasks,
+                                'listId': list.id,
+                                'listName': list.name,
+                                'listImageUrl': list.imageUrl,
+                                'listTasks': list.tasks,
+                                'taskState': list.tasks,
                               });
                             },
                             child: Card(
                               child: Column(
-                                mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
                                     height: 80,
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
-                                        image: NetworkImage(
-                                          cc.lists[index].imageUrl,
-                                        ),
+                                        image: NetworkImage(list.imageUrl),
                                         fit: BoxFit.cover,
                                       ),
                                       borderRadius: const BorderRadius.only(
@@ -104,7 +102,7 @@ class ListsScreen extends StatelessWidget {
                                   CustomSpace(heightMultiplier: 2),
                                   Center(
                                     child: Text(
-                                      cc.lists[index].name,
+                                      list.name,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -114,28 +112,123 @@ class ListsScreen extends StatelessWidget {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children:
-                                          cc.lists[index].tasks.map((task) {
-                                        return Row(
-                                          children: [
-                                            Obx(
-                                              () => Checkbox(
-                                                activeColor:
-                                                    CustomColors.mainBlue,
-                                                value: task.state.value,
-                                                onChanged: (bool? value) {
-                                                  task.state.value = value!;
-                                                  cc.updateTaskState(task);
-                                                },
+                                    child: list.tasks.isNotEmpty
+                                        ? Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: list.tasks.map((task) {
+                                              return Row(
+                                                children: [
+                                                  Obx(
+                                                    () => Checkbox(
+                                                      activeColor:
+                                                          CustomColors.mainBlue,
+                                                      value: task.state.value,
+                                                      onChanged: (bool? value) {
+                                                        task.state.value =
+                                                            value!;
+                                                        cc.updateTaskState(
+                                                            task);
+                                                      },
+                                                    ),
+                                                  ),
+                                                  Text(task.name),
+                                                ],
+                                              );
+                                            }).toList(),
+                                          )
+                                        : const Center(
+                                            child: Text(
+                                              'Aucune tâche dans cette liste.',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                fontStyle: FontStyle.italic,
+                                                color: Colors.grey,
                                               ),
                                             ),
-                                            Text(task.name),
-                                          ],
-                                        );
-                                      }).toList(),
+                                          ),
+                                  ),
+                                  const Spacer(),
+                                  Center(
+                                    child: Row(
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.edit),
+                                          onPressed: () {
+                                            UniquesControllers()
+                                                .data
+                                                .isEditMode
+                                                .value = true;
+
+                                            UniquesControllers()
+                                                .data
+                                                .selectedListId
+                                                ?.value = list.id;
+                                            cc.nameController.text = list.name;
+                                            cc.openBottomSheet(
+                                              "Modifier la liste",
+                                            );
+                                          },
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.delete),
+                                          onPressed: () async {
+                                            bool shouldDelete =
+                                                await showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: const Text(
+                                                      'Confirmation'),
+                                                  content: const Text(
+                                                      'Êtes-vous sûr de vouloir supprimer cette liste?'),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop(false);
+                                                      },
+                                                      child: Text('Retour',
+                                                          style: TextStyle(
+                                                            color: CustomColors
+                                                                .mainBlue,
+                                                          )),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop(true);
+                                                      },
+                                                      child: const Text(
+                                                        'Confirmer',
+                                                        style: TextStyle(
+                                                            color: CustomColors
+                                                                .interaction),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+
+                                            if (shouldDelete) {
+                                              bool isDeleted =
+                                                  await cc.deleteList(list.id);
+                                              if (isDeleted) {
+                                                cc.lists.remove(list);
+                                                UniquesControllers()
+                                                    .data
+                                                    .snackbar(
+                                                      'Liste supprimée',
+                                                      'La liste a été supprimée avec succès',
+                                                      false,
+                                                    );
+                                              }
+                                            }
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],

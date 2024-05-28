@@ -120,8 +120,8 @@ class RegisterScreenController extends GetxController with ControllerMixin {
 
       Get.toNamed(Routes.login);
 
-      UniquesControllers().data.snackbar(
-          'Inscription réussie', '   ${nameController.text} !', false);
+      UniquesControllers().data.snackbar('Inscription réussie bienvenue ',
+          '   ${nameController.text} !', false);
     } catch (e) {
       UniquesControllers().data.isInAsyncCall.value = false;
       UniquesControllers()
@@ -193,41 +193,4 @@ class RegisterScreenController extends GetxController with ControllerMixin {
       print('Erreur lors de la sélection de fichier : $e');
     }
   }
-
-  // void pickFiles() async {
-  //   try {
-  //     FilePickerResult? result =
-  //     await FilePicker.platform.pickFiles(type: FileType.image);
-  //
-  //     if (result != null) {
-  //       // Récupérer le chemin de l'image sélectionnée depuis le fichier
-  //       String imagePath = result.files.single.path ?? '';
-  //
-  //       // Mettre à jour selectedImagePath avec le chemin de l'image
-  //       selectedImagePath.value = imagePath;
-  //     } else {
-  //       // L'utilisateur a annulé la sélection de fichier
-  //       // Gérer le cas d'annulation si nécessaire
-  //     }
-  //   } catch (e) {
-  //     // Gérer les erreurs éventuelles lors de la sélection de fichier
-  //     print('Erreur lors de la sélection de fichier : $e');
-  //   }
-  // }
-
-  // pickFiles() async {
-  //   final pickedFiles = await FilePicker.platform.pickFiles(
-  //     type: FileType.image,
-  //     allowMultiple: false,
-  //   );
-  //
-  //   if (pickedFiles != null) {
-  //     if (pickedFiles.files.single.path != null) {
-  //       file = File(pickedFiles.files.single.path!);
-  //       isPickedFile.value = false;
-  //
-  //       isPickedFile.value = true;
-  //     }
-  //   }
-  // }
 }

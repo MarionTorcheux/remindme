@@ -26,6 +26,8 @@ class CustomTextFormField extends StatelessWidget {
   final int? maxLines;
   final bool? unlimitedLines;
 
+  final Color? labelTextColor;
+
   final Function(String)? onChanged;
   final Function(String)? onFieldSubmitted;
 
@@ -49,6 +51,7 @@ class CustomTextFormField extends StatelessWidget {
     this.unlimitedLines,
     this.onChanged,
     this.onFieldSubmitted,
+    this.labelTextColor,
   });
 
   @override
@@ -69,7 +72,9 @@ class CustomTextFormField extends StatelessWidget {
         children: [
           Text(
             labelText,
-            style: UniquesControllers().data.textStyleMain(),
+            style: UniquesControllers()
+                .data
+                .textStyleMain(color: labelTextColor ?? CustomColors.mainWhite),
           ),
           const SizedBox(height: 8), // Adjust the space between label and input
           Obx(

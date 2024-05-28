@@ -12,6 +12,8 @@ import 'custom_colors.dart';
 
 class CustomData extends GetxController {
   RxBool isInAsyncCall = false.obs;
+  RxBool isEditMode = false.obs;
+  RxString? selectedListId = ''.obs;
 
   final firebaseAuth = FirebaseAuth.instance;
   final firebaseFirestore = FirebaseFirestore.instance;
@@ -22,7 +24,12 @@ class CustomData extends GetxController {
   Duration baseAnimationDuration = const Duration(milliseconds: 400);
   Curve baseAnimationCurve = Curves.easeOut;
 
-  TextStyle textStyleMain({Color color = CustomColors.mainWhite}) {
+  void cleanListVar() {
+    selectedListId!.value = '';
+    isEditMode.value = false;
+  }
+
+  TextStyle textStyleMain({required Color color}) {
     return GoogleFonts.poppins(
       textStyle: TextStyle(
         fontSize: 18,
@@ -82,5 +89,23 @@ class CustomData extends GetxController {
       ),
       snackPosition: SnackPosition.TOP,
     );
+  }
+
+  void back() {
+    if (Get.isSnackbarOpen) {
+      Get.closeAllSnackbars();
+      Future.delayed(const Duration(milliseconds: 1000)).then(
+        (_) {
+          closeDialogAndBottomSheet();
+        },
+      );
+    } else {
+      closeDialogAndBottomSheet();
+    }
+  }
+
+  void closeDialogAndBottomSheet() {
+    if (Get.isDialogOpen!) Get.back();
+    if (Get.isBottomSheetOpen!) Get.back();
   }
 }
