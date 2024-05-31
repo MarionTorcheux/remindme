@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:remindme/core/classes/custom_colors.dart';
 
-import '../../../core/classes/theme_controller.dart';
-
 class CustomTextButton extends StatelessWidget {
   final String tag;
   final String text;
@@ -19,16 +17,11 @@ class CustomTextButton extends StatelessWidget {
     this.color,
     this.iconData,
     required this.onPressed,
-    this.fontSize = 18.0,
+    this.fontSize = 14.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    // final CustomTextButtonController cc = Get.put(
-    //   CustomTextButtonController(),
-    //   tag: tag,
-    // );
-
     final baseColor = color ?? CustomColors.interaction;
 
     return TextButton(

@@ -145,100 +145,121 @@ class ListsScreenController extends GetxController with ControllerMixin {
                     ),
                   ),
                 ),
-                Column(
-                  children: [
-                    const CustomSpace(heightMultiplier: 2.4),
-                    Center(
-                      child: Text(
-                        title,
-                      ),
-                    ),
-                    const CustomSpace(heightMultiplier: 4),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: UniquesControllers().data.baseSpace * 4,
-                      ),
-                    ),
-                    CustomTextFormField(
-                      tag: 'titleListInputField',
-                      controller: nameController,
-                      labelText: 'Titre de la liste',
-                      labelTextColor: CustomColors.mainBlue,
-                    ),
-                    const CustomSpace(heightMultiplier: 2),
-                    InkWell(
-                      onTap: () {
-                        pickFiles();
-                      },
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: 280,
-                          maxHeight: 90,
-                          minHeight: 90,
-                        ),
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: CustomColors.mainBlue,
-                            borderRadius: BorderRadius.circular(
-                                UniquesControllers().data.baseSpace),
-                            boxShadow: [
-                              BoxShadow(
-                                color: CustomColors.mainBlue.withOpacity(0.1),
-                                blurRadius: UniquesControllers().data.baseSpace,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
+                Center(
+                  child: Container(
+                    width: 300.0,
+                    child: Column(
+                      children: [
+                        const CustomSpace(heightMultiplier: 2.4),
+                        Center(
+                          child: Text(
+                            title,
                           ),
                         ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: hasAction ?? true,
-                      child: const CustomSpace(heightMultiplier: 2),
-                    ),
-                    Obx(
-                      () => Visibility(
-                        visible: hasAction ?? true,
-                        child: CustomFABButton(
-                          tag: 'action-bottom-sheet-button',
-                          text:
-                              UniquesControllers().data.isEditMode.value == true
-                                  ? 'Modifier'
-                                  : 'Créer',
-                          iconData: actionIcon,
-                          onPressed: () async {
-                            if (UniquesControllers().data.isEditMode.value) {
-                              ListModel? newList = await modifyList(
-                                  UniquesControllers()
-                                      .data
-                                      .selectedListId!
-                                      .value);
-                              if (newList != null) {
-                                int index = lists.indexWhere((element) =>
-                                    element.id ==
-                                    UniquesControllers()
-                                        .data
-                                        .selectedListId!
-                                        .value);
-
-                                lists[index] = newList;
-                              }
-                              UniquesControllers().data.cleanListVar();
-                            } else {
-                              ListModel? newList = await addNewList();
-                              if (newList != null) {
-                                lists.add(newList);
-                              }
-                            }
-                            UniquesControllers().data.back();
-                          },
-                          backgroundColor: CustomColors.mainBlue,
+                        const CustomSpace(heightMultiplier: 4),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: UniquesControllers().data.baseSpace * 4,
+                          ),
                         ),
-                      ),
+                        CustomTextFormField(
+                          tag: 'titleListInputField',
+                          controller: nameController,
+                          labelText: 'Titre de la liste',
+                          labelTextColor: CustomColors.mainBlue,
+                        ),
+                        const CustomSpace(heightMultiplier: 2),
+                        Obx(
+                          () => InkWell(
+                            onTap: () {
+                              pickFiles();
+                            },
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxWidth: 280,
+                                maxHeight: 90,
+                                minHeight: 90,
+                              ),
+                              child: Container(
+                                child: Text('Ajouter une image'),
+                                alignment: Alignment.center,
+                                width: 280,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  image: selectedImagePath.value.isNotEmpty
+                                      ? DecorationImage(
+                                          image: FileImage(
+                                              File(selectedImagePath.value)),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null,
+                                  borderRadius: BorderRadius.circular(
+                                      UniquesControllers().data.baseSpace),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: CustomColors.mainBlue
+                                          .withOpacity(0.1),
+                                      blurRadius:
+                                          UniquesControllers().data.baseSpace,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: hasAction ?? true,
+                          child: const CustomSpace(heightMultiplier: 2),
+                        ),
+                        Obx(
+                          () => Visibility(
+                            visible: hasAction ?? true,
+                            child: CustomFABButton(
+                              tag: 'action-bottom-sheet-button',
+                              text:
+                                  UniquesControllers().data.isEditMode.value ==
+                                          true
+                                      ? 'Modifier'
+                                      : 'Créer',
+                              onPressed: () async {
+                                if (UniquesControllers()
+                                    .data
+                                    .isEditMode
+                                    .value) {
+                                  ListModel? newList = await modifyList(
+                                      UniquesControllers()
+                                          .data
+                                          .selectedListId!
+                                          .value);
+                                  if (newList != null) {
+                                    int index = lists.indexWhere((element) =>
+                                        element.id ==
+                                        UniquesControllers()
+                                            .data
+                                            .selectedListId!
+                                            .value);
+
+                                    lists[index] = newList;
+                                  }
+                                  UniquesControllers().data.cleanListVar();
+                                } else {
+                                  ListModel? newList = await addNewList();
+                                  if (newList != null) {
+                                    lists.add(newList);
+                                  }
+                                }
+                                UniquesControllers().data.back();
+                              },
+                              backgroundColor: CustomColors.mainBlue,
+                            ),
+                          ),
+                        ),
+                        const CustomSpace(heightMultiplier: 2),
+                      ],
                     ),
-                    const CustomSpace(heightMultiplier: 2),
-                  ],
+                  ),
                 ),
               ],
             ),
@@ -287,6 +308,7 @@ class ListsScreenController extends GetxController with ControllerMixin {
         tasks: [],
         id: uuid,
       );
+      selectedImagePath.value = '';
       file = File('');
       nameController.clear();
     } catch (e) {
@@ -335,6 +357,7 @@ class ListsScreenController extends GetxController with ControllerMixin {
       );
       file = File('');
       nameController.clear();
+      selectedImagePath.value = '';
     } catch (e) {
       UniquesControllers().data.snackbar('Erreur', e.toString(), true);
     }

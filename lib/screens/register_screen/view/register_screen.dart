@@ -38,6 +38,7 @@ class RegisterScreen extends StatelessWidget {
           child: Form(
             key: cc.formKey,
             child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               children: [
                 Container(
                   height: 329,
@@ -46,51 +47,55 @@ class RegisterScreen extends StatelessWidget {
                       image: AssetImage('images/registerTop.png'),
                     ),
                   ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Text("Créer un nouveau compte",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: CustomColors.darkBlue,
-                                fontFamily: 'Poppins')),
-                        const CustomSpace(heightMultiplier: 2),
-                        PhysicalModel(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(70),
-                          elevation: 3.0,
-                          shadowColor: Colors.black,
-                          child: Obx(
-                            () => CircleAvatar(
-                              radius: 70,
-                              backgroundColor: CustomColors.mainWhite,
-                              backgroundImage: cc
-                                      .selectedImagePath.value.isNotEmpty
-                                  ? FileImage(File(cc.selectedImagePath.value))
-                                  : null,
-                              child: cc.selectedImagePath.value.isNotEmpty
-                                  ? null
-                                  : CustomIconButton(
-                                      tag: "register-picture",
-                                      iconData: Icons.add_a_photo_outlined,
-                                      onPressed: () {
-                                        cc.pickFiles();
-                                      },
-                                    ),
+                  child: Container(
+                    width: 300.0,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const Text("Créer un nouveau compte",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  color: CustomColors.darkBlue,
+                                  fontFamily: 'Poppins')),
+                          const CustomSpace(heightMultiplier: 2),
+                          PhysicalModel(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(70),
+                            elevation: 3.0,
+                            shadowColor: Colors.black,
+                            child: Obx(
+                              () => CircleAvatar(
+                                radius: 70,
+                                backgroundColor: CustomColors.mainWhite,
+                                backgroundImage:
+                                    cc.selectedImagePath.value.isNotEmpty
+                                        ? FileImage(
+                                            File(cc.selectedImagePath.value))
+                                        : null,
+                                child: cc.selectedImagePath.value.isNotEmpty
+                                    ? null
+                                    : CustomIconButton(
+                                        tag: "register-picture",
+                                        iconData: Icons.add_a_photo_outlined,
+                                        onPressed: () {
+                                          cc.pickFiles();
+                                        },
+                                      ),
+                              ),
                             ),
                           ),
-                        ),
-                        const CustomSpace(heightMultiplier: 2),
-                        const Text(
-                          'Photo de profil',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              color: CustomColors.mainWhite,
-                              fontFamily: 'Poppins'),
-                        ),
-                      ]),
+                          const CustomSpace(heightMultiplier: 2),
+                          const Text(
+                            'Photo de profil',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
+                                color: CustomColors.mainWhite,
+                                fontFamily: 'Poppins'),
+                          ),
+                        ]),
+                  ),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,

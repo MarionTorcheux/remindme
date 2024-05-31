@@ -32,7 +32,7 @@ class CustomData extends GetxController {
   TextStyle textStyleMain({required Color color}) {
     return GoogleFonts.poppins(
       textStyle: TextStyle(
-        fontSize: 18,
+        fontSize: 14,
         color: color,
         fontWeight: FontWeight.w600,
       ),

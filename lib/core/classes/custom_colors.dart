@@ -11,6 +11,6 @@ class CustomColors {
   static const Color darkBlue = Color(0xFF2D3A53);
   static const Color shadowBlue = Color(0xFF1B72BB);
   static const Color blueButton = Color(0xFF29B6F6);
-  static const Color interaction = Color(0xFFD30C7B);
+  static const Color interaction = Color(0xFFB21C1C);
   static const Color mainBlue = Color(0xFF2389C2);
 }

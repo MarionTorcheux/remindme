@@ -8,21 +8,17 @@ import '../../../features/custom_loader/view/custom_loader.dart';
 class ScreenLayout extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final Widget? bottomNavigationBar;
-  final Widget? floatingActionButton;
+
   final FloatingActionButtonLocation? floatingActionButtonLocation;
-  final Drawer? drawer;
+
   final Widget body;
-  final bool? showVersion;
 
   const ScreenLayout({
     super.key,
     this.appBar,
     this.bottomNavigationBar,
-    this.floatingActionButton,
     this.floatingActionButtonLocation,
-    this.drawer,
     required this.body,
-    this.showVersion,
   });
 
   @override
@@ -34,9 +30,7 @@ class ScreenLayout extends StatelessWidget {
             resizeToAvoidBottomInset: false,
             appBar: appBar,
             bottomNavigationBar: bottomNavigationBar,
-            floatingActionButton: floatingActionButton,
             floatingActionButtonLocation: floatingActionButtonLocation,
-            drawer: drawer,
             body: body,
           ),
           Visibility(

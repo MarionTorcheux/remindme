@@ -29,75 +29,78 @@ class LoginScreen extends StatelessWidget {
             gradient: CustomColors.backgroundGradient,
           ),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Image.asset(
-                    'images/logintop.png',
-                  ),
-                ),
-                CustomTextFormField(
-                  tag: cc.emailTag,
-                  controller: cc.emailController,
-                  labelText: cc.emailLabel,
-                  errorText: cc.emailError,
-                  keyboardType: cc.emailInputType,
-                  onChanged: (value) {
-                    cc.emailController.text = value;
-                  },
-                ),
-                const CustomSpace(heightMultiplier: 2),
-                CustomTextFormField(
-                  tag: cc.passwordTag,
-                  controller: cc.passwordController,
-                  labelText: cc.passwordLabel,
-                  errorText: cc.passwordError,
-                  keyboardType: cc.passwordInputType,
-                  isPassword: true,
-                ),
-                const CustomSpace(heightMultiplier: 1),
-                SizedBox(
-                  width: cc.maxWith,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: CustomTextButton(
-                      tag: cc.forgotPasswordTag,
-                      text: cc.forgotPasswordLabel,
-                      color: CustomColors.mainWhite,
-                      onPressed: () {
-                        cc.passwordScreenOnPressed();
-                      },
+            child: Container(
+              width: 300.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Image.asset(
+                      'images/logintop.png',
                     ),
                   ),
-                ),
-                const CustomSpace(heightMultiplier: 4),
-                CustomFABButton(
-                  tag: cc.connectionTag,
-                  text: cc.connectionLabel,
-                  backgroundColor: CustomColors.blueButton,
-                  onPressed: () {
-                    cc.login();
-                  },
-                ),
-                const CustomSpace(heightMultiplier: 4),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Pas encore de compte ?",
-                        style: UniquesControllers()
-                            .data
-                            .textStyleMain(color: CustomColors.mainWhite)),
-                    CustomTextButton(
-                        tag: "createButton",
-                        text: "Créer",
+                  CustomTextFormField(
+                    tag: cc.emailTag,
+                    controller: cc.emailController,
+                    labelText: cc.emailLabel,
+                    errorText: cc.emailError,
+                    keyboardType: cc.emailInputType,
+                    onChanged: (value) {
+                      cc.emailController.text = value;
+                    },
+                  ),
+                  const CustomSpace(heightMultiplier: 2),
+                  CustomTextFormField(
+                    tag: cc.passwordTag,
+                    controller: cc.passwordController,
+                    labelText: cc.passwordLabel,
+                    errorText: cc.passwordError,
+                    keyboardType: cc.passwordInputType,
+                    isPassword: true,
+                  ),
+                  const CustomSpace(heightMultiplier: 1),
+                  SizedBox(
+                    width: cc.maxWith,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: CustomTextButton(
+                        tag: cc.forgotPasswordTag,
+                        text: cc.forgotPasswordLabel,
+                        color: CustomColors.mainWhite,
                         onPressed: () {
-                          cc.registerScreenOnPressed();
-                        }),
-                  ],
-                ),
-              ],
+                          cc.passwordScreenOnPressed();
+                        },
+                      ),
+                    ),
+                  ),
+                  const CustomSpace(heightMultiplier: 4),
+                  CustomFABButton(
+                    tag: cc.connectionTag,
+                    text: cc.connectionLabel,
+                    backgroundColor: CustomColors.blueButton,
+                    onPressed: () {
+                      cc.login();
+                    },
+                  ),
+                  const CustomSpace(heightMultiplier: 4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Pas encore de compte ?",
+                          style: UniquesControllers()
+                              .data
+                              .textStyleMain(color: CustomColors.mainWhite)),
+                      CustomTextButton(
+                          tag: "createButton",
+                          text: "Créer",
+                          onPressed: () {
+                            cc.registerScreenOnPressed();
+                          }),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

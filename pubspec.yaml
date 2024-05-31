@@ -42,6 +42,7 @@ flutter:
       - images/logintop.png
       - images/registerTop.png
       - images/deadfish.png
+      - images/forgotFish.png
 
   fonts:
     - family: Poppins

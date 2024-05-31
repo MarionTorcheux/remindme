@@ -34,86 +34,96 @@ class ProfileScreen extends StatelessWidget {
       bottomNavigationBar: CustomBottomAppBar(
         tag: "bottomAppBar",
       ),
-      body: Stack(children: [
+      body: Stack(alignment: Alignment.center, children: [
         Container(
           decoration: const BoxDecoration(
             gradient: CustomColors.backgroundGradient,
           ),
         ),
-        StreamBuilder<User>(
+        Container(
+          width: 300.0,
+          child: StreamBuilder<User>(
             stream: cc.getCurrentUser(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('Erreur : ${snapshot.error}');
               } else if (snapshot.hasData) {
                 final user = snapshot.data!;
-                return Column(children: [
-                  PhysicalModel(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(70),
-                    elevation: 3.0,
-                    shadowColor: Colors.black,
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(user.avatarUrl),
-                      radius: 60,
-                    ),
-                  ),
-                  Card(
-                    elevation: 4,
-                    margin: const EdgeInsets.all(16),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 60),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const CustomSpace(heightMultiplier: 5),
+                      PhysicalModel(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(70),
+                        elevation: 3.0,
+                        shadowColor: Colors.black,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(user.avatarUrl),
+                          radius: 60,
+                        ),
+                      ),
+                      const CustomSpace(heightMultiplier: 3),
+                      Card(
+                        elevation: 4,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
                             children: [
-                              Row(
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Icon(Icons.person,
-                                      size: 35, color: CustomColors.mainBlue),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    'Nom : ${user.name}',
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge,
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.person,
+                                          size: 20,
+                                          color: CustomColors.mainBlue),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        'Nom : ${user.name}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  const Icon(Icons.email,
-                                      size: 35, color: CustomColors.mainBlue),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    'Email : ${user.email}',
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge,
+                                  const CustomSpace(heightMultiplier: 1),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.email,
+                                          size: 20,
+                                          color: CustomColors.mainBlue),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        'Email : ${user.email}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  CustomFABButton(
-                    text: 'Déconnexion',
-                    onPressed: () {
-                      cc.signOut();
-                    },
-                    tag: 'signOutButton',
-                    backgroundColor: CustomColors.interaction,
-                  ),
-                ]);
+                      const CustomSpace(heightMultiplier: 35),
+                      CustomFABButton(
+                        text: 'Déconnexion',
+                        onPressed: () {
+                          cc.signOut();
+                        },
+                        tag: 'signOutButton',
+                        backgroundColor: CustomColors.interaction,
+                      ),
+                    ]);
               } else {
                 return Text('Chargement...');
               }
-            }),
+            },
+          ),
+        ),
       ]),
     );
   }

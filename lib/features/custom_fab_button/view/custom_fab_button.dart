@@ -9,7 +9,6 @@ import '../../../core/classes/custom_colors.dart';
 class CustomFABButton extends StatelessWidget {
   final String tag;
   final String text;
-  final IconData? iconData;
   final Color backgroundColor;
   final Function() onPressed;
 
@@ -17,7 +16,6 @@ class CustomFABButton extends StatelessWidget {
     super.key,
     required this.tag,
     required this.text,
-    this.iconData,
     required this.backgroundColor,
     required this.onPressed,
   });
@@ -32,7 +30,6 @@ class CustomFABButton extends StatelessWidget {
               .data
               .textStyleMain(color: CustomColors.mainWhite)),
       backgroundColor: backgroundColor,
-      icon: iconData != null ? Icon(iconData) : null,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),

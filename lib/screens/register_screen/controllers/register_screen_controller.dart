@@ -120,8 +120,8 @@ class RegisterScreenController extends GetxController with ControllerMixin {
 
       Get.toNamed(Routes.login);
 
-      UniquesControllers().data.snackbar('Inscription réussie bienvenue ',
-          '   ${nameController.text} !', false);
+      UniquesControllers().data.snackbar(
+          'Inscription réussie', 'Bienvenue ${nameController.text} !', false);
     } catch (e) {
       UniquesControllers().data.isInAsyncCall.value = false;
       UniquesControllers()

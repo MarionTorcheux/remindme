@@ -65,7 +65,7 @@ class ListsScreen extends StatelessWidget {
                           crossAxisCount: 2,
                           crossAxisSpacing: 8.0,
                           mainAxisSpacing: 8.0,
-                          childAspectRatio: 0.60,
+                          childAspectRatio: 0.55,
                         ),
                         itemCount: cc.lists.length,
                         itemBuilder: (context, index) {
@@ -152,6 +152,8 @@ class ListsScreen extends StatelessWidget {
                                   const Spacer(),
                                   Center(
                                     child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         IconButton(
                                           icon: const Icon(Icons.edit),
