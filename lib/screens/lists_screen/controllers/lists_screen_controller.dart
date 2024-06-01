@@ -181,7 +181,40 @@ class ListsScreenController extends GetxController with ControllerMixin {
                                 minHeight: 90,
                               ),
                               child: Container(
-                                child: Text('Ajouter une image'),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    selectedImagePath.value.isNotEmpty
+                                        ? CustomIconButton(
+                                            tag: deleteImageTag,
+                                            iconData: Icons.delete,
+                                            iconColor: Colors.red,
+                                            backgroundColor: Colors.white,
+                                            onPressed: () {
+                                              selectedImagePath.value = '';
+                                              file = File('');
+                                            },
+                                          )
+                                        : Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Icon(
+                                                Icons.add_a_photo,
+                                                color: CustomColors.mainBlue,
+                                              ),
+                                              CustomSpace(widthMultiplier: 2),
+                                              Text(
+                                                'Ajouter une image',
+                                                style: TextStyle(
+                                                  color: CustomColors.mainBlue,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                  ],
+                                ),
                                 alignment: Alignment.center,
                                 width: 280,
                                 height: 50,

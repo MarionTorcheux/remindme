@@ -21,8 +21,6 @@ class CustomData extends GetxController {
 
   double baseSpace = 8;
   double baseAppBarHeight = 56;
-  Duration baseAnimationDuration = const Duration(milliseconds: 400);
-  Curve baseAnimationCurve = Curves.easeOut;
 
   void cleanListVar() {
     selectedListId!.value = '';

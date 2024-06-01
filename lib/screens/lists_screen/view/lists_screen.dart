@@ -28,6 +28,7 @@ class ListsScreen extends StatelessWidget {
         title: 'Mes listes',
         onPressed: () {
           cc.nameController.clear();
+          cc.selectedImagePath.value = '';
           cc.openBottomSheet("Ajouter une liste");
         },
         isautomaticallyImplyLeading: false,
@@ -59,13 +60,20 @@ class ListsScreen extends StatelessWidget {
                 Expanded(
                   child: Obx(
                     () {
+                      if (cc.lists.isEmpty) {
+                        return Center(
+                          child: Text('Vous n\'avez pas encore de listes',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                              textAlign: TextAlign.center),
+                        );
+                      }
                       return GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 8.0,
                           mainAxisSpacing: 8.0,
-                          childAspectRatio: 0.55,
+                          childAspectRatio: 0.50,
                         ),
                         itemCount: cc.lists.length,
                         itemBuilder: (context, index) {
@@ -116,7 +124,8 @@ class ListsScreen extends StatelessWidget {
                                         ? Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
-                                            children: list.tasks.map((task) {
+                                            children:
+                                                list.tasks.take(3).map((task) {
                                               return Row(
                                                 children: [
                                                   Obx(
@@ -132,7 +141,16 @@ class ListsScreen extends StatelessWidget {
                                                       },
                                                     ),
                                                   ),
-                                                  Text(task.name),
+                                                  Flexible(
+                                                    child: Container(
+                                                      child: Text(
+                                                        task.name,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ],
                                               );
                                             }).toList(),
@@ -174,7 +192,10 @@ class ListsScreen extends StatelessWidget {
                                           },
                                         ),
                                         IconButton(
-                                          icon: const Icon(Icons.delete),
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: CustomColors.interaction,
+                                          ),
                                           onPressed: () async {
                                             bool shouldDelete =
                                                 await showDialog(
