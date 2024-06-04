@@ -12,14 +12,13 @@ dependencies:
     sdk: flutter
 
   google_fonts:
-  intl:
   async:
   url_launcher:
 
   get:
   get_storage:
-  rive:
   file_picker:
+  flutter_svg:
 
   firebase_core: ^2.24.2
   firebase_core_web:
@@ -30,6 +29,7 @@ dependencies:
   firebase_storage:
   firebase_storage_web:
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -39,10 +39,7 @@ flutter_lints: ^2.0.0
 flutter:
   uses-material-design: true
   assets:
-      - images/logintop.png
-      - images/registerTop.png
-      - images/deadfish.png
-      - images/forgotFish.png
+      - images/
 
   fonts:
     - family: Poppins

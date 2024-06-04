@@ -11,6 +11,7 @@ abstract class Routes {
   static const history = RoutePaths.history;
   static const sharedlists = RoutePaths.sharedlists;
   static const listDetail = RoutePaths.listdetail;
+  static const taskDetail = RoutePaths.taskdetail;
 }
 
 abstract class RoutePaths {
@@ -26,4 +27,5 @@ abstract class RoutePaths {
   static const history = '/history';
   static const sharedlists = '/sharedlists';
   static const listdetail = '/listdetail';
+  static const taskdetail = '/taskdetail';
 }

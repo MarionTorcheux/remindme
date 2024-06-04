@@ -37,7 +37,7 @@ class LoginScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(top: 30),
                     child: Image.asset(
-                      'images/logintop.png',
+                      'images/toplogin.svg',
                     ),
                   ),
                   CustomTextFormField(

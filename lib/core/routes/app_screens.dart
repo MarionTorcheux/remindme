@@ -6,6 +6,7 @@ import 'package:remindme/screens/register_screen/view/register_screen.dart';
 import 'package:remindme/screens/shared_lists_screen/view/shared_lists_screen.dart';
 import '../../screens/lists_screen/view/lists_screen.dart';
 import '../../screens/password_screen/view/password_screen.dart';
+import '../../screens/task_detail_screen/view/task_detail_screen.dart';
 import 'app_routes.dart';
 
 import '../../screens/tasks_screen/view/tasks_screen.dart';
@@ -52,6 +53,10 @@ class AppScreens {
     GetPage(
       name: RoutePaths.listdetail,
       page: () => const ListDetailScreen(),
+    ),
+    GetPage(
+      name: RoutePaths.taskdetail,
+      page: () => const TaskDetailScreen(),
     ),
   ];
 }

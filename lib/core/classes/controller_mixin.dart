@@ -5,9 +5,6 @@ import 'package:get/get.dart';
 import 'package:remindme/core/classes/unique_controllers.dart';
 import 'package:remindme/core/models/listModel.dart';
 
-import '../../features/custom_fab_button/view/custom_fab_button.dart';
-import '../../features/custom_icon_button/view/custom_icon_button.dart';
-import '../../features/custom_space/view/custom_space.dart';
 import '../models/taskModel.dart';
 import '../models/user.dart';
 import 'custom_colors.dart';
@@ -55,7 +52,15 @@ mixin ControllerMixin on GetxController {
 //# region lists
 
   RxList<ListModel> lists = <ListModel>[].obs;
-  RxList<TaskModel> tasks = <TaskModel>[].obs;
+  Rx<ListModel> selectedCurrentList = ListModel(
+    id: '',
+    name: '',
+    imageUrl: '',
+    createdAt: DateTime(0),
+    userId: '',
+    tasks: [],
+  ).obs;
+
   void getLists() async {
     String? userId = UniquesControllers().getStorage.read('currentUserUID');
     if (userId != null) {

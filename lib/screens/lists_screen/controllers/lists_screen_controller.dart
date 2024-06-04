@@ -22,6 +22,7 @@ class ListsScreenController extends GetxController with ControllerMixin {
   FirebaseFirestore firestore = UniquesControllers().data.firebaseFirestore;
   RxString selectedImagePath = ''.obs;
   TextEditingController nameController = TextEditingController();
+  RxInt selectedListIndex = 0.obs;
 
   Future<String> uploadImage(File file, String userId) async {
     final List<Future<String>> uploadTasks = [];
@@ -221,8 +222,16 @@ class ListsScreenController extends GetxController with ControllerMixin {
                                 decoration: BoxDecoration(
                                   image: selectedImagePath.value.isNotEmpty
                                       ? DecorationImage(
-                                          image: FileImage(
-                                              File(selectedImagePath.value)),
+                                          image: UniquesControllers()
+                                                  .data
+                                                  .isEditMode
+                                                  .value
+                                              ? NetworkImage(
+                                                  lists[selectedListIndex.value]
+                                                      .imageUrl)
+                                              : FileImage(File(
+                                                      selectedImagePath.value))
+                                                  as ImageProvider,
                                           fit: BoxFit.cover,
                                         )
                                       : null,
@@ -261,11 +270,7 @@ class ListsScreenController extends GetxController with ControllerMixin {
                                     .data
                                     .isEditMode
                                     .value) {
-                                  ListModel? newList = await modifyList(
-                                      UniquesControllers()
-                                          .data
-                                          .selectedListId!
-                                          .value);
+                                  ListModel? newList = await modifyList();
                                   if (newList != null) {
                                     int index = lists.indexWhere((element) =>
                                         element.id ==
@@ -350,7 +355,7 @@ class ListsScreenController extends GetxController with ControllerMixin {
     return newList;
   }
 
-  Future<ListModel?> modifyList(String listId) async {
+  Future<ListModel?> modifyList() async {
     String userId = UniquesControllers().getStorage.read('currentUserUID');
     String uuid = '${DateTime.now().millisecondsSinceEpoch}$userId';
     String defaultListImage =
@@ -372,7 +377,7 @@ class ListsScreenController extends GetxController with ControllerMixin {
           .data
           .firebaseFirestore
           .collection('list')
-          .doc(listId)
+          .doc(lists[selectedListIndex.value].id)
           .set({
         'name': nameController.text,
         'userId': UniquesControllers().getStorage.read('currentUserUID'),
@@ -385,8 +390,8 @@ class ListsScreenController extends GetxController with ControllerMixin {
         userId: UniquesControllers().getStorage.read('currentUserUID'),
         createdAt: DateTime.now(),
         imageUrl: imageUrl,
-        tasks: [],
-        id: uuid,
+        tasks: lists[selectedListIndex.value].tasks,
+        id: lists[selectedListIndex.value].id,
       );
       file = File('');
       nameController.clear();

@@ -121,15 +121,16 @@ class ListsScreen extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: list.tasks.isNotEmpty
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children:
-                                                list.tasks.take(3).map((task) {
-                                              return Row(
-                                                children: [
-                                                  Obx(
-                                                    () => Checkbox(
+                                        ? Obx(
+                                            () => Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: list.tasks
+                                                  .take(3)
+                                                  .map((task) {
+                                                return Row(
+                                                  children: [
+                                                    Checkbox(
                                                       activeColor:
                                                           CustomColors.mainBlue,
                                                       value: task.state.value,
@@ -140,20 +141,20 @@ class ListsScreen extends StatelessWidget {
                                                             task);
                                                       },
                                                     ),
-                                                  ),
-                                                  Flexible(
-                                                    child: Container(
-                                                      child: Text(
-                                                        task.name,
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
+                                                    Flexible(
+                                                      child: Container(
+                                                        child: Text(
+                                                          task.name,
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
-                                              );
-                                            }).toList(),
+                                                  ],
+                                                );
+                                              }).toList(),
+                                            ),
                                           )
                                         : const Center(
                                             child: Text(
@@ -176,16 +177,18 @@ class ListsScreen extends StatelessWidget {
                                         IconButton(
                                           icon: const Icon(Icons.edit),
                                           onPressed: () {
+                                            cc.selectedListIndex.value = index;
                                             UniquesControllers()
                                                 .data
                                                 .isEditMode
                                                 .value = true;
-
                                             UniquesControllers()
                                                 .data
                                                 .selectedListId
                                                 ?.value = list.id;
                                             cc.nameController.text = list.name;
+                                            cc.selectedImagePath.value =
+                                                list.imageUrl;
                                             cc.openBottomSheet(
                                               "Modifier la liste",
                                             );
