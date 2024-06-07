@@ -64,15 +64,10 @@ class ListsScreenController extends GetxController with ControllerMixin {
           await FilePicker.platform.pickFiles(type: FileType.image);
 
       if (result != null) {
-        // Récupérer le chemin de l'image sélectionnée depuis le fichier
         String imagePath = result.files.single.path ?? '';
 
-        // Mettre à jour selectedImagePath avec le chemin de l'image
         selectedImagePath.value = imagePath;
-      } else {
-        // L'utilisateur a annulé la sélection de fichier
-        // Gérer le cas d'annulation si nécessaire
-      }
+      } else {}
 
       if (result != null) {
         if (result.files.single.path != null) {
@@ -83,7 +78,6 @@ class ListsScreenController extends GetxController with ControllerMixin {
         }
       }
     } catch (e) {
-      // Gérer les erreurs éventuelles lors de la sélection de fichier
       print('Erreur lors de la sélection de fichier : $e');
     }
   }
@@ -270,7 +264,8 @@ class ListsScreenController extends GetxController with ControllerMixin {
                                     .data
                                     .isEditMode
                                     .value) {
-                                  ListModel? newList = await modifyList();
+                                  ListModel? newList = await modifyList(
+                                      lists[selectedListIndex.value].imageUrl);
                                   if (newList != null) {
                                     int index = lists.indexWhere((element) =>
                                         element.id ==
@@ -309,8 +304,6 @@ class ListsScreenController extends GetxController with ControllerMixin {
   }
 
   Future<ListModel?> addNewList() async {
-    String userId = UniquesControllers().getStorage.read('currentUserUID');
-    String uuid = '${DateTime.now().millisecondsSinceEpoch}$userId';
     String defaultListImage =
         "https://firebasestorage.googleapis.com/v0/b/remindme-dc6a8.appspot.com/o/pictureList%2FdefaultListImage.png?alt=media&token=3c2a78db-1114-4166-864f-95c21a8abd90";
 
@@ -326,17 +319,19 @@ class ListsScreenController extends GetxController with ControllerMixin {
     ListModel? newList = null;
 
     try {
-      await UniquesControllers()
+      var docRef = await UniquesControllers()
           .data
           .firebaseFirestore
           .collection('list')
-          .doc(uuid)
-          .set({
+          .add({
         'name': nameController.text,
         'userId': UniquesControllers().getStorage.read('currentUserUID'),
         'createdAt': DateTime.now(),
         'imageUrl': imageUrl
       });
+
+      // Récupérer l'ID du document créé
+      String docId = docRef.id;
 
       newList = ListModel(
         name: nameController.text,
@@ -344,7 +339,7 @@ class ListsScreenController extends GetxController with ControllerMixin {
         createdAt: DateTime.now(),
         imageUrl: imageUrl,
         tasks: [],
-        id: uuid,
+        id: docId,
       );
       selectedImagePath.value = '';
       file = File('');
@@ -355,22 +350,23 @@ class ListsScreenController extends GetxController with ControllerMixin {
     return newList;
   }
 
-  Future<ListModel?> modifyList() async {
-    String userId = UniquesControllers().getStorage.read('currentUserUID');
-    String uuid = '${DateTime.now().millisecondsSinceEpoch}$userId';
+  Future<ListModel?> modifyList(String imageUrlList) async {
+    print('image url listtttttttttttttttttttttttt : $imageUrlList');
+
     String defaultListImage =
         "https://firebasestorage.googleapis.com/v0/b/remindme-dc6a8.appspot.com/o/pictureList%2FdefaultListImage.png?alt=media&token=3c2a78db-1114-4166-864f-95c21a8abd90";
+    String imageUrl = imageUrlList; // Utiliser l'image URL existante par défaut
 
-    String imageUrl = '';
-
-    if (file.path != '') {
+    // Si l'image a été réinitialisée (via la suppression)
+    if (selectedImagePath.value == '' && file.path == '') {
+      imageUrl = defaultListImage;
+    } else if (file.path != '') {
+      // Si un nouveau fichier a été sélectionné, téléchargez-le
       imageUrl = await uploadImage(
           file, UniquesControllers().getStorage.read('currentUserUID'));
-    } else {
-      imageUrl = defaultListImage;
     }
 
-    ListModel? newList = null;
+    ListModel? newList;
 
     try {
       await UniquesControllers()
@@ -393,12 +389,14 @@ class ListsScreenController extends GetxController with ControllerMixin {
         tasks: lists[selectedListIndex.value].tasks,
         id: lists[selectedListIndex.value].id,
       );
+
       file = File('');
       nameController.clear();
       selectedImagePath.value = '';
     } catch (e) {
       UniquesControllers().data.snackbar('Erreur', e.toString(), true);
     }
+
     return newList;
   }
 

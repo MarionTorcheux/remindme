@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../features/custom_icon_button/view/custom_icon_button.dart';
 import '../../features/custom_loader/view/custom_loader.dart';
-import '../routes/app_routes.dart';
+
 import 'custom_colors.dart';
 
 class CustomData extends GetxController {
@@ -37,13 +36,6 @@ class CustomData extends GetxController {
     );
   }
 
-  Widget get backButton => CustomIconButton(
-        tag: 'backButton',
-        iconData: Icons.arrow_back_outlined,
-        iconColor: CustomColors.mainBlue,
-        onPressed: Get.back,
-      );
-
   Widget loader() {
     return const Center(
       child: CustomLoader(
@@ -59,7 +51,7 @@ class CustomData extends GetxController {
       icon: error
           ? const Icon(
               Icons.error,
-              color: CustomColors.mainWhite,
+              color: CustomColors.interaction,
             )
           : const Icon(
               Icons.check_circle,
@@ -73,7 +65,7 @@ class CustomData extends GetxController {
         horizontal: baseSpace * 2,
       ),
       duration: const Duration(seconds: 5),
-      borderColor: CustomColors.mainBlue,
+      borderColor: CustomColors.mainWhite,
       colorText: CustomColors.mainWhite,
       backgroundColor: CustomColors.mainBlue,
       mainButton: TextButton(

@@ -1,7 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:remindme/core/classes/unique_controllers.dart';
 import 'package:remindme/core/models/listModel.dart';
 
@@ -10,22 +10,36 @@ import '../models/user.dart';
 import 'custom_colors.dart';
 
 mixin ControllerMixin on GetxController {
-  TextButton textButtonFilter(String text) {
-    return TextButton(
-      onPressed: () {},
-      style: TextButton.styleFrom(
-          backgroundColor: CustomColors.darkBlue,
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(9))),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: CustomColors.mainWhite,
-          fontSize: 16,
-        ),
-      ),
-    );
+  List<RxBool> filterButtonStates = List.generate(3, (index) => false.obs);
+  Widget textButtonFilter(int index, String text, Function() onPressed) {
+    return Obx(() => TextButton(
+          onPressed: () {
+            onPressed();
+            filterButtonStates[index].value = !filterButtonStates[index].value;
+
+            for (int i = 0; i < filterButtonStates.length; i++) {
+              if (i != index) {
+                filterButtonStates[i].value = false;
+              }
+            }
+          },
+          style: TextButton.styleFrom(
+            backgroundColor: filterButtonStates[index].value
+                ? CustomColors.mainBlue
+                : CustomColors.darkBlue,
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(9),
+            ),
+          ),
+          child: Text(
+            text,
+            style: TextStyle(
+              color: CustomColors.mainWhite,
+              fontSize: 16,
+            ),
+          ),
+        ));
   }
 
   //#region users

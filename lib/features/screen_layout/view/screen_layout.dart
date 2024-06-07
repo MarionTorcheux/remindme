@@ -8,16 +8,14 @@ import '../../../features/custom_loader/view/custom_loader.dart';
 class ScreenLayout extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final Widget? bottomNavigationBar;
-
-  final FloatingActionButtonLocation? floatingActionButtonLocation;
-
   final Widget body;
+  final Gradient? gradient;
 
   const ScreenLayout({
     super.key,
     this.appBar,
     this.bottomNavigationBar,
-    this.floatingActionButtonLocation,
+    this.gradient,
     required this.body,
   });
 
@@ -26,11 +24,15 @@ class ScreenLayout extends StatelessWidget {
     return Obx(
       () => Stack(
         children: [
+          Container(
+            decoration:
+                BoxDecoration(gradient: CustomColors.backgroundGradient),
+          ),
           Scaffold(
+            backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
             appBar: appBar,
             bottomNavigationBar: bottomNavigationBar,
-            floatingActionButtonLocation: floatingActionButtonLocation,
             body: body,
           ),
           Visibility(

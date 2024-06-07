@@ -25,20 +25,16 @@ class HistoryScreen extends StatelessWidget {
 
     return ScreenLayout(
       appBar: CustomAppBar(
+        isLeadingWithCustomArrow: true,
         title: 'Historique',
         onPressed: () {},
-        isautomaticallyImplyLeading: true,
       ),
       bottomNavigationBar: CustomBottomAppBar(
         tag: "bottomAppBar",
       ),
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: CustomColors.backgroundGradient,
-            ),
-          ),
+          const CustomSpace(heightMultiplier: 4),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

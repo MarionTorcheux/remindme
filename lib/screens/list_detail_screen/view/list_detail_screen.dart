@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:remindme/core/classes/unique_controllers.dart';
 import 'package:remindme/features/custom_icon_button/view/custom_icon_button.dart';
 import 'package:remindme/features/custom_space/view/custom_space.dart';
 import 'package:remindme/features/screen_layout/view/screen_layout.dart';
 import '../../../core/classes/custom_colors.dart';
 import '../../../core/routes/app_routes.dart';
+import '../../../features/custom_app_bar/view/custom_app_bar.dart';
 import '../../../features/custom_bottom_app_bar/view/custom_bottom_app_bar.dart';
 import '../controllers/list_detail_screen_controller.dart';
 
@@ -24,101 +26,117 @@ class ListDetailScreen extends StatelessWidget {
     ListDetailScreenController cc = Get.put(
       ListDetailScreenController(),
       tag: 'list-detail-screen',
-      permanent: true,
+      permanent: false,
     );
 
     return ScreenLayout(
-      appBar: AppBar(
-        title: const Text(
-          'Détails de la liste',
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              // Get.toNamed(AppRoutes.addTask);
-            },
-          ),
-        ],
+      appBar: CustomAppBar(
+        isLeadingWithCustomArrow: true,
+        onPressed: () {
+          UniquesControllers().data.isEditMode.value = false;
+          cc.openBottomSheet("Ajouter une tâche");
+        },
+        title: 'Détails de la liste',
+        iconData: Icons.add,
       ),
       bottomNavigationBar: CustomBottomAppBar(
         tag: "bottomAppBar",
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: CustomColors.backgroundGradient,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView(
+          children: [
+            const CustomSpace(heightMultiplier: 1),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                cc.textButtonFilter(0, 'Récent', () {
+                  cc.lists.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+                }),
+                cc.textButtonFilter(1, 'À faire', () {
+                  cc.lists.sort((a, b) {
+                    int aCount =
+                        a.tasks.where((task) => !task.state.value).length;
+                    int bCount =
+                        b.tasks.where((task) => !task.state.value).length;
+                    return aCount.compareTo(bCount);
+                  });
+                }),
+                cc.textButtonFilter(2, 'Terminé', () {
+                  ;
+                  cc.lists.sort((a, b) {
+                    int aCount =
+                        a.tasks.where((task) => task.state.value).length;
+                    int bCount =
+                        b.tasks.where((task) => task.state.value).length;
+                    return aCount.compareTo(bCount);
+                  });
+                }),
+              ],
+            ),
+            CustomSpace(heightMultiplier: 2),
+            Card(
+              child: Column(
                 children: [
-                  cc.textButtonFilter('Récent'),
-                  cc.textButtonFilter('À faire'),
-                  cc.textButtonFilter('Terminé'),
-                ],
-              ),
-              CustomSpace(heightMultiplier: 2),
-              Card(
-                child: Column(
-                  children: [
-                    Container(
-                      height: 180,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(listImageUrl),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
+                  Container(
+                    height: 180,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(listImageUrl),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
                       ),
                     ),
-                    CustomSpace(heightMultiplier: 2),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        bottom: 30,
-                      ),
-                      child: Text(
-                        listName,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
+                  ),
+                  CustomSpace(heightMultiplier: 2),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 30,
                     ),
-                    listTasks.isEmpty
-                        ? const Center(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                bottom: 30,
-                              ),
-                              child: Text(
-                                'Aucune tâche dans cette liste.',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.grey,
-                                ),
-                              ),
+                    child: Text(
+                      listName,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                  ),
+                  Obx(() {
+                    if (cc.listTasks.isEmpty) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            bottom: 30,
+                          ),
+                          child: Text(
+                            'Aucune tâche dans cette liste.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.grey,
                             ),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: 30,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: listTasks.asMap().entries.map((entry) {
-                                int taskIndex = entry.key;
-                                var task = entry.value;
-                                return Column(
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 30,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: cc.listTasks.asMap().entries.map((entry) {
+                            int taskIndex = entry.key;
+                            var task = entry.value;
+                            return Column(
+                              children: [
+                                Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        Obx(
-                                          () => Checkbox(
+                                    Obx(
+                                      () => Column(
+                                        children: [
+                                          Checkbox(
                                             activeColor: CustomColors.mainBlue,
                                             value: task.state.value,
                                             onChanged: (bool? value) {
@@ -126,58 +144,114 @@ class ListDetailScreen extends StatelessWidget {
                                               cc.updateTaskState(task);
                                             },
                                           ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            Get.toNamed(Routes.taskDetail,
-                                                arguments: {
-                                                  'task': task,
-                                                  'taskId': task.id,
-                                                  'taskName': task.name,
-                                                  'taskDescription':
-                                                      task.description,
-                                                  'taskState': task.state,
-                                                  'endDate': task.endDate,
-                                                  'startDate': task.startDate,
-                                                  'priority': task.priority,
-                                                });
-                                          },
-                                          child: Container(
-                                            width: 240,
-                                            child: Text(task.name),
-                                          ),
-                                        ),
-                                        CustomIconButton(
-                                          tag: 'modify-task',
-                                          onPressed: () {},
-                                          iconData: Icons.edit,
-                                        ),
-                                        CustomIconButton(
-                                          tag: 'delete-task',
-                                          onPressed: () {
-                                            print('delete');
-                                          },
-                                          iconData: Icons.delete,
-                                          iconColor: Colors.red,
-                                        ),
-                                      ],
-                                    ),
-                                    if (taskIndex < listTasks.length - 1)
-                                      const Divider(
-                                        color: Colors.grey,
-                                        indent: 40,
-                                        endIndent: 40,
+                                        ],
                                       ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Get.toNamed(Routes.taskDetail,
+                                            arguments: {
+                                              'task': task,
+                                              'taskId': task.id,
+                                              'taskName': task.name,
+                                              'taskDescription':
+                                                  task.description,
+                                              'taskState': task.state,
+                                              'endDate': task.endDate,
+                                              'startDate': task.startDate,
+                                              'priority': task.priority,
+                                            });
+                                      },
+                                      child: Container(
+                                        width: 180,
+                                        child: Text(task.name),
+                                      ),
+                                    ),
+                                    CustomIconButton(
+                                      tag: 'modify-task',
+                                      onPressed: () {
+                                        UniquesControllers()
+                                            .data
+                                            .isEditMode
+                                            .value = true;
+                                        cc.openBottomSheet(
+                                            'Modifier une tâche');
+                                      },
+                                      iconData: Icons.edit,
+                                      iconColor: CustomColors.darkBlue,
+                                    ),
+                                    CustomIconButton(
+                                      tag: 'delete-task',
+                                      onPressed: () async {
+                                        bool shouldDelete = await showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text('Confirmation'),
+                                              content: const Text(
+                                                  'Êtes-vous sûr de vouloir supprimer cette tâche?'),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context)
+                                                        .pop(false);
+                                                  },
+                                                  child: Text('Retour',
+                                                      style: TextStyle(
+                                                          color: CustomColors
+                                                              .mainBlue)),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context)
+                                                        .pop(true);
+                                                  },
+                                                  child: const Text(
+                                                    'Confirmer',
+                                                    style: TextStyle(
+                                                        color: CustomColors
+                                                            .interaction),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+
+                                        if (shouldDelete) {
+                                          bool isDeleted =
+                                              await cc.deleteTask(task.id);
+                                          if (isDeleted) {
+                                            UniquesControllers().data.snackbar(
+                                                  'Tâche supprimée',
+                                                  'La tâche a été supprimée avec succès',
+                                                  false,
+                                                );
+                                          }
+                                        }
+                                      },
+                                      iconData: Icons.delete,
+                                      iconColor: Colors.red,
+                                    ),
                                   ],
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                  ],
-                ),
+                                ),
+                                if (taskIndex < cc.listTasks.length - 1)
+                                  const Divider(
+                                    color: Colors.grey,
+                                    indent: 40,
+                                    endIndent: 40,
+                                  ),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    }
+                  }),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

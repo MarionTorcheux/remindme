@@ -7,23 +7,23 @@ class TaskModel extends Nameable {
   @override
   final String id;
   final String name;
-  final String description;
-  final DateTime startDate;
-  final String priority;
+  final String? description;
+  final DateTime? startDate;
+  final String? priority;
   final RxBool state;
-  final DateTime endDate;
+  final DateTime? endDate;
   final String listId;
 
   TaskModel({
     required this.id,
     required this.name,
-    required this.description,
-    required this.startDate,
-    required this.priority,
-    required this.state,
-    required this.endDate,
+    this.description,
+    this.startDate,
+    this.priority,
+    RxBool? state,
+    this.endDate,
     required this.listId,
-  });
+  }) : state = state ?? false.obs;
 
   factory TaskModel.fromDocument(DocumentSnapshot doc) {
     bool state = doc['state'];

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:remindme/core/classes/custom_colors.dart';
 import 'package:remindme/core/classes/unique_controllers.dart';
+import 'package:remindme/features/custom_space/view/custom_space.dart';
 import '../controllers/custom_text_form_field_controller.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -10,10 +11,8 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
 
   final String labelText;
-  final String? hintText;
   final String? errorText;
   final IconData? iconData;
-  final String? riveAnimation;
   final bool? isPassword;
   final TextInputType? keyboardType;
 
@@ -36,10 +35,8 @@ class CustomTextFormField extends StatelessWidget {
     required this.tag,
     required this.controller,
     required this.labelText,
-    this.hintText,
     this.errorText,
     this.iconData,
-    this.riveAnimation,
     this.isPassword,
     this.keyboardType,
     this.validatorPattern,
@@ -76,14 +73,15 @@ class CustomTextFormField extends StatelessWidget {
                 .data
                 .textStyleMain(color: labelTextColor ?? CustomColors.mainWhite),
           ),
-          const SizedBox(height: 8), // Adjust the space between label and input
+          const CustomSpace(heightMultiplier: 0.5),
           Obx(
             () => PhysicalModel(
-              color: Colors.transparent,
+              color: CustomColors.interaction,
               borderRadius: BorderRadius.circular(10),
               elevation: 3.0,
               shadowColor: Colors.black,
               child: TextFormField(
+                cursorColor: CustomColors.mainBlue,
                 focusNode: cc.focusNode,
                 keyboardType: keyboardType ?? TextInputType.text,
                 controller: controller,
@@ -110,7 +108,6 @@ class CustomTextFormField extends StatelessWidget {
                   return null;
                 },
                 decoration: InputDecoration(
-                  hintText: hintText,
                   contentPadding: const EdgeInsets.all(16),
                   filled: true,
                   fillColor: CustomColors.mainWhite,

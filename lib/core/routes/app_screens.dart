@@ -9,7 +9,6 @@ import '../../screens/password_screen/view/password_screen.dart';
 import '../../screens/task_detail_screen/view/task_detail_screen.dart';
 import 'app_routes.dart';
 
-import '../../screens/tasks_screen/view/tasks_screen.dart';
 import '../../screens/login_screen/view/login_screen.dart';
 
 class AppScreens {
@@ -21,10 +20,6 @@ class AppScreens {
     GetPage(
       name: RoutePaths.login,
       page: () => const LoginScreen(),
-    ),
-    GetPage(
-      name: RoutePaths.tasks,
-      page: () => const TasksScreen(),
     ),
     GetPage(
       name: RoutePaths.register,

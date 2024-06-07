@@ -25,14 +25,15 @@ class CustomTextButton extends StatelessWidget {
     final baseColor = color ?? CustomColors.interaction;
 
     return TextButton(
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-          foregroundColor: baseColor, // Text color
-        ),
-        child: Text(
-          text,
-          style: GoogleFonts.poppins(
-              fontSize: fontSize, fontWeight: FontWeight.w600),
-        ));
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        foregroundColor: baseColor,
+      ),
+      child: Text(
+        text,
+        style: GoogleFonts.poppins(
+            fontSize: fontSize, fontWeight: FontWeight.w600),
+      ),
+    );
   }
 }

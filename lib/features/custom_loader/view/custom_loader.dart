@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
 
 import '../../../core/classes/custom_colors.dart';
 

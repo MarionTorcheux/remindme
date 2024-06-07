@@ -32,7 +32,7 @@ class CustomBottomAppBar extends StatelessWidget {
               size: 30,
             ),
             onPressed: () {
-              Get.toNamed(Routes.lists);
+              Get.offNamed(Routes.lists);
             },
           ),
           IconButton(
@@ -42,7 +42,7 @@ class CustomBottomAppBar extends StatelessWidget {
               size: 30,
             ),
             onPressed: () {
-              Get.toNamed(Routes.sharedlists);
+              Get.offNamed(Routes.sharedlists);
             },
           ),
           IconButton(
@@ -52,7 +52,7 @@ class CustomBottomAppBar extends StatelessWidget {
               size: 30,
             ),
             onPressed: () {
-              Get.toNamed(Routes.history);
+              Get.offNamed(Routes.history);
             },
           ),
           IconButton(
@@ -62,7 +62,7 @@ class CustomBottomAppBar extends StatelessWidget {
               size: 30,
             ),
             onPressed: () {
-              Get.toNamed(Routes.profile);
+              Get.offNamed(Routes.profile);
             },
           ),
         ],

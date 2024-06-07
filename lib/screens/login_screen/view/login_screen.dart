@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:remindme/core/classes/custom_colors.dart';
 import 'package:remindme/features/custom_text_form_field/view/custom_text_form_field.dart';
@@ -23,20 +24,18 @@ class LoginScreen extends StatelessWidget {
     );
 
     return ScreenLayout(
-      body: Stack(children: [
-        Container(
-          decoration: const BoxDecoration(
-            gradient: CustomColors.backgroundGradient,
-          ),
-          child: Center(
+      body: Stack(
+        children: [
+          Center(
             child: Container(
               width: 300.0,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
+                    height: 320.0,
                     padding: const EdgeInsets.only(top: 30),
-                    child: Image.asset(
+                    child: SvgPicture.asset(
                       'images/toplogin.svg',
                     ),
                   ),
@@ -92,19 +91,28 @@ class LoginScreen extends StatelessWidget {
                               .data
                               .textStyleMain(color: CustomColors.mainWhite)),
                       CustomTextButton(
-                          tag: "createButton",
-                          text: "Créer",
-                          onPressed: () {
-                            cc.registerScreenOnPressed();
-                          }),
+                        tag: "createButton",
+                        text: "Créer",
+                        color: CustomColors.darkBlue,
+                        onPressed: () {
+                          cc.registerScreenOnPressed();
+                        },
+                      ),
                     ],
+                  ),
+                  const CustomSpace(heightMultiplier: 2),
+                  Text(
+                    'Version 1.0.0',
+                    style: UniquesControllers()
+                        .data
+                        .textStyleMain(color: CustomColors.mainWhite),
                   ),
                 ],
               ),
             ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

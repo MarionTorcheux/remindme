@@ -10,15 +10,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl:
+
 
   google_fonts:
   async:
   url_launcher:
 
+
   get:
   get_storage:
   file_picker:
   flutter_svg:
+  flutter_keyboard_visibility:
 
   firebase_core: ^2.24.2
   firebase_core_web:

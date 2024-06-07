@@ -37,31 +37,26 @@ class TaskDetailScreen extends StatelessWidget {
         title: 'Détails de la tâche',
         onPressed: () {},
         iconData: Icons.edit,
-        isautomaticallyImplyLeading: true,
+        isLeadingWithCustomArrow: true,
       ),
       bottomNavigationBar: CustomBottomAppBar(
         tag: "bottomAppBar",
       ),
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: CustomColors.backgroundGradient,
-            ),
-          ),
           SingleChildScrollView(
             child: Center(
               child: Obx(
                 () => Column(
                   children: [
+                    CustomSpace(heightMultiplier: 4),
                     Card(
                       elevation: 10,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Container(
-                        width: 350.0,
-                        height: Get.height * 0.7,
+                        width: 320.0,
                         padding: const EdgeInsets.all(20),
                         child: Column(
                           children: [
@@ -77,11 +72,14 @@ class TaskDetailScreen extends StatelessWidget {
                                       cc.updateTaskState(task);
                                     },
                                   ),
-                                  Text(
-                                    taskName,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                  Container(
+                                    width: 200.0,
+                                    child: Text(
+                                      taskName,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -121,11 +119,14 @@ class TaskDetailScreen extends StatelessWidget {
                       ),
                     ),
                     CustomSpace(heightMultiplier: 3.0),
-                    CustomFABButton(
-                      text: 'Supprimer',
-                      onPressed: () {},
-                      tag: 'deleteButton',
-                      backgroundColor: CustomColors.interaction,
+                    Container(
+                      width: 320.0,
+                      child: CustomFABButton(
+                        text: 'Supprimer',
+                        onPressed: () {},
+                        tag: 'deleteButton',
+                        backgroundColor: CustomColors.interaction,
+                      ),
                     ),
                   ],
                 ),

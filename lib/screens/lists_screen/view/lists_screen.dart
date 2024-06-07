@@ -31,7 +31,6 @@ class ListsScreen extends StatelessWidget {
           cc.selectedImagePath.value = '';
           cc.openBottomSheet("Ajouter une liste");
         },
-        isautomaticallyImplyLeading: false,
         iconData: Icons.add,
       ),
       bottomNavigationBar: CustomBottomAppBar(
@@ -39,21 +38,37 @@ class ListsScreen extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: CustomColors.backgroundGradient,
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
+                const CustomSpace(heightMultiplier: 1),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    cc.textButtonFilter('Récent'),
-                    cc.textButtonFilter('À faire'),
-                    cc.textButtonFilter('Terminé'),
+                    cc.textButtonFilter(0, 'Récent', () {
+                      cc.lists
+                          .sort((a, b) => b.createdAt.compareTo(a.createdAt));
+                    }),
+                    cc.textButtonFilter(1, 'À faire', () {
+                      cc.lists.sort((a, b) {
+                        int aCount =
+                            a.tasks.where((task) => !task.state.value).length;
+                        int bCount =
+                            b.tasks.where((task) => !task.state.value).length;
+                        return aCount.compareTo(bCount);
+                      });
+                    }),
+                    cc.textButtonFilter(2, 'Terminé', () {
+                      ;
+                      cc.lists.sort((a, b) {
+                        int aCount =
+                            a.tasks.where((task) => task.state.value).length;
+                        int bCount =
+                            b.tasks.where((task) => task.state.value).length;
+                        return aCount.compareTo(bCount);
+                      });
+                    }),
                   ],
                 ),
                 CustomSpace(heightMultiplier: 2),
@@ -89,6 +104,7 @@ class ListsScreen extends StatelessWidget {
                                 'listTasks': list.tasks,
                                 'taskState': list.tasks,
                               });
+                              print('Card tapped: ${list.id}');
                             },
                             child: Card(
                               child: Column(
@@ -197,7 +213,7 @@ class ListsScreen extends StatelessWidget {
                                         IconButton(
                                           icon: const Icon(
                                             Icons.delete,
-                                            color: CustomColors.interaction,
+                                            color: Colors.red,
                                           ),
                                           onPressed: () async {
                                             bool shouldDelete =

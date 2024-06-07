@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:remindme/features/custom_app_bar/view/custom_app_bar.dart';
 
@@ -31,45 +32,42 @@ class PasswordScreen extends StatelessWidget {
         },
         isautomaticallyImplyLeading: true,
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: CustomColors.backgroundGradient,
-        ),
-        child: Center(
-          child: Container(
-            width: 300.0,
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Image.asset(
-                    'images/forgotFish.png',
+      body: Center(
+        child: Container(
+          width: 300.0,
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 30),
+                child: SvgPicture.asset(
+                  'images/forgotpass.svg',
+                  height: 200,
+                ),
+              ),
+              CustomSpace(heightMultiplier: 2),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CustomTextFormField(
+                    tag: cc.emailTag,
+                    controller: cc.emailController,
+                    labelText: cc.emailLabel,
+                    errorText: cc.emailError,
+                    iconData: cc.emailIconData,
                   ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CustomTextFormField(
-                      tag: cc.emailTag,
-                      controller: cc.emailController,
-                      labelText: cc.emailLabel,
-                      errorText: cc.emailError,
-                      iconData: cc.emailIconData,
-                    ),
-                    const CustomSpace(heightMultiplier: 4),
-                    CustomFABButton(
-                      tag: cc.resetPasswordTag,
-                      text: cc.resetPasswordLabel,
-                      onPressed: () {
-                        cc.resetPassword();
-                      },
-                      backgroundColor: CustomColors.blueButton,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  const CustomSpace(heightMultiplier: 4),
+                  CustomFABButton(
+                    tag: cc.resetPasswordTag,
+                    text: cc.resetPasswordLabel,
+                    onPressed: () {
+                      cc.resetPassword();
+                    },
+                    backgroundColor: CustomColors.blueButton,
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
