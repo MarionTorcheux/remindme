@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:remindme/core/classes/unique_controllers.dart';
-import 'package:remindme/core/models/listModel.dart';
 
+import 'unique_controllers.dart';
+import '../models/listModel.dart';
 import '../models/taskModel.dart';
 import '../models/user.dart';
 import 'custom_colors.dart';
 
 mixin ControllerMixin on GetxController {
   List<RxBool> filterButtonStates = List.generate(3, (index) => false.obs);
+
   Widget textButtonFilter(int index, String text, Function() onPressed) {
     return Obx(() => TextButton(
           onPressed: () {

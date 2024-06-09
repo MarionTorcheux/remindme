@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/classes/controller_mixin.dart';
-import '../../../core/classes/custom_colors.dart';
-import '../../../core/classes/unique_controllers.dart';
-import '../../../core/models/taskModel.dart';
-import '../../../core/routes/app_routes.dart';
 
-class TaskDetailScreenController extends GetxController with ControllerMixin {}
+class TaskDetailScreenController extends GetxController with ControllerMixin {
+  String titlePage = 'Détails de la tâche';
+  String tagBottomAppBarTaskDetailScreen = 'bottomAppBarTaskDetailScreen';
+}

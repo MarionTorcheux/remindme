@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:remindme/features/custom_app_bar/view/custom_app_bar.dart';
+
+import '../../../features/custom_app_bar/view/custom_app_bar.dart';
 import '../../../core/classes/custom_colors.dart';
 import '../../../features/custom_fab_button/view/custom_fab_button.dart';
 import '../../../features/custom_icon_button/view/custom_icon_button.dart';
@@ -26,7 +27,7 @@ class RegisterScreen extends StatelessWidget {
     return ScreenLayout(
       appBar: CustomAppBar(
         isautomaticallyImplyLeading: true,
-        title: 'Créer un compte',
+        title: cc.pageTitle,
         onPressed: () {},
       ),
       body: Center(
@@ -56,7 +57,7 @@ class RegisterScreen extends StatelessWidget {
                       child: cc.selectedImagePath.value.isNotEmpty
                           ? null
                           : CustomIconButton(
-                              tag: "register-picture",
+                              tag: cc.tagIconButton,
                               iconData: Icons.add_a_photo_outlined,
                               onPressed: () {
                                 cc.pickFiles();
@@ -66,13 +67,9 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 ),
                 const CustomSpace(heightMultiplier: 2),
-                const Text(
-                  'Photo de profil',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                      color: CustomColors.mainWhite,
-                      fontFamily: 'Poppins'),
+                Text(
+                  cc.textProfilePicture,
+                  style: cc.textStyleLabelRegister,
                 ),
                 CustomTextFormField(
                   tag: cc.nameTag,
@@ -117,12 +114,9 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 Visibility(
                   visible: !cc.isConfirmedPassword.value,
-                  child: const Text(
-                    'Les mots de passe ne correspondent pas',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: Text(
+                    cc.textErrorPasswordCorrespondence,
+                    style: cc.textStyleError,
                   ),
                 ),
                 const CustomSpace(heightMultiplier: 4),

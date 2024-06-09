@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:remindme/features/custom_app_bar/view/custom_app_bar.dart';
 import 'package:remindme/features/custom_space/view/custom_space.dart';
-import 'package:remindme/features/custom_text_button/view/custom_text_button.dart';
 import 'package:remindme/features/screen_layout/view/screen_layout.dart';
-import '../../../core/classes/custom_colors.dart';
-import '../../../core/classes/unique_controllers.dart';
 import '../../../features/custom_bottom_app_bar/view/custom_bottom_app_bar.dart';
 import '../controllers/shared_lists_screen_controller.dart';
 
@@ -26,25 +22,32 @@ class SharedListsScreen extends StatelessWidget {
 
     return ScreenLayout(
       appBar: CustomAppBar(
-        title: 'Listes partagées',
+        title: cc.titleSharedListsScreen,
         onPressed: () {},
         isLeadingWithCustomArrow: true,
       ),
       bottomNavigationBar: CustomBottomAppBar(
-        tag: "bottomAppBar",
+        tag: cc.tagBottomAppBarSharedListsScreen,
       ),
       body: Stack(
         children: [
           Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Vous n\'avez pas encore de listes partagées',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                    textAlign: TextAlign.center),
-                CustomSpace(heightMultiplier: 5),
-                SvgPicture.asset('images/deadfish.svg'),
-              ],
+            child: Container(
+              width: 300.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(cc.textNoSharedLists,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      textAlign: TextAlign.center),
+                  CustomSpace(heightMultiplier: 5),
+                  SvgPicture.asset(
+                    cc.svgPicturePath,
+                    width: 150,
+                  ),
+                ],
+              ),
             ),
           )
         ],

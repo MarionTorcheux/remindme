@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:remindme/features/custom_app_bar/view/custom_app_bar.dart';
-import 'package:remindme/features/custom_text_button/view/custom_text_button.dart';
-import 'package:remindme/features/screen_layout/view/screen_layout.dart';
+import '../../../features/custom_app_bar/view/custom_app_bar.dart';
+import '../../../features/screen_layout/view/screen_layout.dart';
 import '../../../core/classes/custom_colors.dart';
-import '../../../core/classes/unique_controllers.dart';
 import '../../../features/custom_bottom_app_bar/view/custom_bottom_app_bar.dart';
 import '../../../features/custom_space/view/custom_space.dart';
-import '../controllers/history_screen_controller.dart';
+import '../../../screens/history_screen/controllers/history_screen_controller.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({
@@ -26,11 +23,11 @@ class HistoryScreen extends StatelessWidget {
     return ScreenLayout(
       appBar: CustomAppBar(
         isLeadingWithCustomArrow: true,
-        title: 'Historique',
+        title: cc.titleHistoryScreen,
         onPressed: () {},
       ),
       bottomNavigationBar: CustomBottomAppBar(
-        tag: "bottomAppBar",
+        tag: cc.tagBottomAppBarHistoryScreen,
       ),
       body: Stack(
         children: [
@@ -39,7 +36,7 @@ class HistoryScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Vous n\'avez pas encore d\'historique',
+                Text(cc.textNoHistory,
                     style: Theme.of(context).textTheme.headlineSmall,
                     textAlign: TextAlign.center),
                 CustomSpace(heightMultiplier: 5),

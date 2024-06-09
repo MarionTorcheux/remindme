@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:remindme/core/classes/unique_controllers.dart';
-import 'package:remindme/features/custom_icon_button/view/custom_icon_button.dart';
-import 'package:remindme/features/custom_space/view/custom_space.dart';
-import 'package:remindme/features/screen_layout/view/screen_layout.dart';
+import '../../../core/classes/unique_controllers.dart';
+import '../../../features/custom_icon_button/view/custom_icon_button.dart';
+import '../../../features/custom_space/view/custom_space.dart';
+import '../../../features/screen_layout/view/screen_layout.dart';
 import '../../../core/classes/custom_colors.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../features/custom_app_bar/view/custom_app_bar.dart';
@@ -18,9 +18,7 @@ class ListDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final arguments = Get.arguments;
-    final String listId = arguments['listId'];
     final String listName = arguments['listName'];
-    final List listTasks = arguments['listTasks'];
     final String listImageUrl = arguments['listImageUrl'];
 
     ListDetailScreenController cc = Get.put(
@@ -34,13 +32,13 @@ class ListDetailScreen extends StatelessWidget {
         isLeadingWithCustomArrow: true,
         onPressed: () {
           UniquesControllers().data.isEditMode.value = false;
-          cc.openBottomSheet("Ajouter une tâche");
+          cc.openBottomSheet(cc.bottomSheetTitleAddTask);
         },
-        title: 'Détails de la liste',
+        title: cc.titleListDetailScreen,
         iconData: Icons.add,
       ),
       bottomNavigationBar: CustomBottomAppBar(
-        tag: "bottomAppBar",
+        tag: cc.tagBottomAppBarListDetailScreen,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -103,13 +101,13 @@ class ListDetailScreen extends StatelessWidget {
                   ),
                   Obx(() {
                     if (cc.listTasks.isEmpty) {
-                      return const Center(
+                      return Center(
                         child: Padding(
                           padding: EdgeInsets.only(
                             bottom: 30,
                           ),
                           child: Text(
-                            'Aucune tâche dans cette liste.',
+                            cc.textNoTask,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 13,
@@ -149,7 +147,7 @@ class ListDetailScreen extends StatelessWidget {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Get.toNamed(Routes.taskDetail,
+                                        Get.offNamed(Routes.taskDetail,
                                             arguments: {
                                               'task': task,
                                               'taskId': task.id,
@@ -168,35 +166,38 @@ class ListDetailScreen extends StatelessWidget {
                                       ),
                                     ),
                                     CustomIconButton(
-                                      tag: 'modify-task',
+                                      tag: cc.tagCustomIconButtonModifyTask,
                                       onPressed: () {
                                         UniquesControllers()
                                             .data
                                             .isEditMode
                                             .value = true;
                                         cc.openBottomSheet(
-                                            'Modifier une tâche');
+                                            cc.titleBottomSheetModifyTask);
                                       },
                                       iconData: Icons.edit,
                                       iconColor: CustomColors.darkBlue,
                                     ),
                                     CustomIconButton(
-                                      tag: 'delete-task',
+                                      tag: cc.tagCustomIconButtonDeleteTask,
                                       onPressed: () async {
                                         bool shouldDelete = await showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              title: const Text('Confirmation'),
-                                              content: const Text(
-                                                  'Êtes-vous sûr de vouloir supprimer cette tâche?'),
+                                              title: Text(cc
+                                                  .titleAlertDialogDeleteConfirmation),
+                                              content: Text(cc
+                                                  .contentAlertDialogDeleteConfirmation),
                                               actions: <Widget>[
                                                 TextButton(
                                                   onPressed: () {
                                                     Navigator.of(context)
                                                         .pop(false);
                                                   },
-                                                  child: Text('Retour',
+                                                  child: Text(
+                                                      cc
+                                                          .cancelAlertDialogDeleteConfirmation,
                                                       style: TextStyle(
                                                           color: CustomColors
                                                               .mainBlue)),
@@ -206,8 +207,8 @@ class ListDetailScreen extends StatelessWidget {
                                                     Navigator.of(context)
                                                         .pop(true);
                                                   },
-                                                  child: const Text(
-                                                    'Confirmer',
+                                                  child: Text(
+                                                    cc.confirmAlertDialogDeleteConfirmation,
                                                     style: TextStyle(
                                                         color: CustomColors
                                                             .interaction),
@@ -223,8 +224,8 @@ class ListDetailScreen extends StatelessWidget {
                                               await cc.deleteTask(task.id);
                                           if (isDeleted) {
                                             UniquesControllers().data.snackbar(
-                                                  'Tâche supprimée',
-                                                  'La tâche a été supprimée avec succès',
+                                                  cc.titleSnackBarDeleteConfirmation,
+                                                  cc.contentSnackBarDeleteConfirmation,
                                                   false,
                                                 );
                                           }

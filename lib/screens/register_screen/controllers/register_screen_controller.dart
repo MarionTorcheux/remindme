@@ -1,18 +1,29 @@
 import 'dart:io';
 import 'package:path/path.dart' as path;
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:remindme/core/classes/controller_mixin.dart';
 
+import '../../../core/classes/custom_colors.dart';
 import '../../../core/classes/unique_controllers.dart';
 import '../../../core/routes/app_routes.dart';
 
 class RegisterScreenController extends GetxController with ControllerMixin {
-  String pageTitle = 'Inscription'.toUpperCase();
+  String pageTitle = 'Créer un compte';
+  String tagIconButton = 'register-icon-button';
+  String textProfilePicture = 'Photo de profil';
+  TextStyle textStyleLabelRegister = TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: 20,
+      color: CustomColors.mainWhite,
+      fontFamily: 'Poppins');
+  String textErrorPasswordCorrespondence =
+      'Les mots de passe ne correspondent pas';
+  TextStyle textStyleError = TextStyle(
+      color: CustomColors.interaction, fontSize: 12, fontFamily: 'Poppins');
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:remindme/core/classes/custom_colors.dart';
-import 'package:remindme/core/classes/unique_controllers.dart';
-import 'package:remindme/features/custom_space/view/custom_space.dart';
+import '../../../core/classes/custom_colors.dart';
+import '../../../core/classes/unique_controllers.dart';
+import '../../../features/custom_space/view/custom_space.dart';
 import '../controllers/custom_text_form_field_controller.dart';
 
 class CustomTextFormField extends StatelessWidget {

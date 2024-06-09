@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:remindme/core/models/taskModel.dart';
-
+import 'taskModel.dart';
 import 'nameable.dart';
 
 class ListModel extends Nameable {

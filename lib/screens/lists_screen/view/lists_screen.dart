@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:remindme/features/custom_app_bar/view/custom_app_bar.dart';
-import 'package:remindme/features/custom_space/view/custom_space.dart';
 
+import '../../../features/custom_app_bar/view/custom_app_bar.dart';
+import '../../../features/custom_space/view/custom_space.dart';
 import '../../../core/classes/custom_colors.dart';
 import '../../../core/classes/unique_controllers.dart';
 import '../../../core/routes/app_routes.dart';
@@ -25,16 +25,16 @@ class ListsScreen extends StatelessWidget {
 
     return ScreenLayout(
       appBar: CustomAppBar(
-        title: 'Mes listes',
+        title: cc.titleListsScreen,
         onPressed: () {
           cc.nameController.clear();
           cc.selectedImagePath.value = '';
-          cc.openBottomSheet("Ajouter une liste");
+          cc.openBottomSheet(cc.titleBottomSheetAddList);
         },
         iconData: Icons.add,
       ),
       bottomNavigationBar: CustomBottomAppBar(
-        tag: "bottomAppBar",
+        tag: cc.tagBottomAppBarListsScreen,
       ),
       body: Stack(
         children: [
@@ -77,7 +77,7 @@ class ListsScreen extends StatelessWidget {
                     () {
                       if (cc.lists.isEmpty) {
                         return Center(
-                          child: Text('Vous n\'avez pas encore de listes',
+                          child: Text(cc.textNoLists,
                               style: Theme.of(context).textTheme.headlineSmall,
                               textAlign: TextAlign.center),
                         );
@@ -95,8 +95,6 @@ class ListsScreen extends StatelessWidget {
                           final list = cc.lists[index];
                           return InkWell(
                             onTap: () {
-                              print('Card tapped: ${list.id}');
-                              print('${list.tasks}');
                               Get.toNamed(Routes.listDetail, arguments: {
                                 'listId': list.id,
                                 'listName': list.name,
@@ -172,9 +170,9 @@ class ListsScreen extends StatelessWidget {
                                               }).toList(),
                                             ),
                                           )
-                                        : const Center(
+                                        : Center(
                                             child: Text(
-                                              'Aucune tâche dans cette liste.',
+                                              cc.textNoTaskInList,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontSize: 13,
@@ -206,7 +204,7 @@ class ListsScreen extends StatelessWidget {
                                             cc.selectedImagePath.value =
                                                 list.imageUrl;
                                             cc.openBottomSheet(
-                                              "Modifier la liste",
+                                              cc.titleBottomSheetModifyList,
                                             );
                                           },
                                         ),
@@ -221,17 +219,18 @@ class ListsScreen extends StatelessWidget {
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
-                                                  title: const Text(
-                                                      'Confirmation'),
-                                                  content: const Text(
-                                                      'Êtes-vous sûr de vouloir supprimer cette liste?'),
+                                                  title: Text(
+                                                      cc.textTitleDeleteList),
+                                                  content: Text(
+                                                      cc.textContentDeleteList),
                                                   actions: <Widget>[
                                                     TextButton(
                                                       onPressed: () {
                                                         Navigator.of(context)
                                                             .pop(false);
                                                       },
-                                                      child: Text('Retour',
+                                                      child: Text(
+                                                          cc.textActionCancelList,
                                                           style: TextStyle(
                                                             color: CustomColors
                                                                 .mainBlue,
@@ -242,8 +241,8 @@ class ListsScreen extends StatelessWidget {
                                                         Navigator.of(context)
                                                             .pop(true);
                                                       },
-                                                      child: const Text(
-                                                        'Confirmer',
+                                                      child: Text(
+                                                        cc.textActionDeleteList,
                                                         style: TextStyle(
                                                             color: CustomColors
                                                                 .interaction),
@@ -262,8 +261,8 @@ class ListsScreen extends StatelessWidget {
                                                 UniquesControllers()
                                                     .data
                                                     .snackbar(
-                                                      'Liste supprimée',
-                                                      'La liste a été supprimée avec succès',
+                                                      cc.titleSnackBarConfimation,
+                                                      cc.textSnackBarConfimation,
                                                       false,
                                                     );
                                               }

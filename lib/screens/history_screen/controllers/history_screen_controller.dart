@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../core/classes/controller_mixin.dart';
-import '../../../core/classes/custom_colors.dart';
-import '../../../core/classes/unique_controllers.dart';
-import '../../../core/routes/app_routes.dart';
 
-class HistoryScreenController extends GetxController with ControllerMixin {}
+class HistoryScreenController extends GetxController with ControllerMixin {
+  String titleHistoryScreen = 'Historique';
+  String tagBottomAppBarHistoryScreen = 'bottomAppBarHistoryScreen';
+  String textNoHistory = 'Vous n\'avez pas encore d\'historique';
+}

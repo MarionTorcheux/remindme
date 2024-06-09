@@ -5,7 +5,8 @@ import '../../../core/classes/unique_controllers.dart';
 import '../../../core/routes/app_routes.dart';
 
 class PasswordScreenController extends GetxController {
-  String pageTitle = 'Mot de passe oublié ?'.toUpperCase();
+  String pageTitle = 'Mot de passe oublié';
+  String svgImagePath = 'images/forgotpass.svg';
 
   String customBottomAppBarTag = 'password-bottom-app-bar';
 

@@ -1,7 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:remindme/core/classes/custom_data.dart';
 import 'package:remindme/core/classes/unique_controllers.dart';
 
 import '../../../core/classes/custom_colors.dart';

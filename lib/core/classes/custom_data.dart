@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../features/custom_loader/view/custom_loader.dart';
-
 import 'custom_colors.dart';
 
 class CustomData extends GetxController {

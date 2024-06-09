@@ -1,8 +1,8 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:remindme/features/custom_app_bar/view/custom_app_bar.dart';
-import 'package:remindme/features/screen_layout/view/screen_layout.dart';
+
+import '../../../../../features/custom_app_bar/view/custom_app_bar.dart';
+import '../../../../../features/screen_layout/view/screen_layout.dart';
 import '../../../../../core/classes/custom_colors.dart';
 import '../../../../../features/custom_bottom_app_bar/view/custom_bottom_app_bar.dart';
 import '../../../../../features/custom_space/view/custom_space.dart';
@@ -34,13 +34,13 @@ class TaskDetailScreen extends StatelessWidget {
 
     return ScreenLayout(
       appBar: CustomAppBar(
-        title: 'Détails de la tâche',
+        title: cc.titlePage,
         onPressed: () {},
         iconData: Icons.edit,
         isLeadingWithCustomArrow: true,
       ),
       bottomNavigationBar: CustomBottomAppBar(
-        tag: "bottomAppBar",
+        tag: cc.tagBottomAppBarTaskDetailScreen,
       ),
       body: Stack(
         children: [

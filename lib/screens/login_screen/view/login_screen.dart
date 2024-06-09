@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:remindme/core/classes/custom_colors.dart';
-import 'package:remindme/features/custom_text_form_field/view/custom_text_form_field.dart';
-import 'package:remindme/features/screen_layout/view/screen_layout.dart';
+import '../../../core/classes/custom_colors.dart';
+import '../../../features/custom_text_form_field/view/custom_text_form_field.dart';
+import '../../../features/screen_layout/view/screen_layout.dart';
 import '../../../core/classes/unique_controllers.dart';
 import '../../../features/custom_fab_button/view/custom_fab_button.dart';
 import '../../../features/custom_space/view/custom_space.dart';
@@ -36,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                     height: 320.0,
                     padding: const EdgeInsets.only(top: 30),
                     child: SvgPicture.asset(
-                      'images/toplogin.svg',
+                      cc.imgTopPath,
                     ),
                   ),
                   CustomTextFormField(
@@ -75,8 +75,8 @@ class LoginScreen extends StatelessWidget {
                   ),
                   const CustomSpace(heightMultiplier: 4),
                   CustomFABButton(
-                    tag: cc.connectionTag,
-                    text: cc.connectionLabel,
+                    tag: cc.connexionTag,
+                    text: cc.connexionLabel,
                     backgroundColor: CustomColors.blueButton,
                     onPressed: () {
                       cc.login();
@@ -86,13 +86,13 @@ class LoginScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Pas encore de compte ?",
+                      Text(cc.textNoAccountYet,
                           style: UniquesControllers()
                               .data
                               .textStyleMain(color: CustomColors.mainWhite)),
                       CustomTextButton(
-                        tag: "createButton",
-                        text: "Créer",
+                        tag: cc.tagCreateNewAccount,
+                        text: cc.textCustomButtonCreateNewAccount,
                         color: CustomColors.darkBlue,
                         onPressed: () {
                           cc.registerScreenOnPressed();
@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   const CustomSpace(heightMultiplier: 2),
                   Text(
-                    'Version 1.0.0',
+                    cc.textApplicationVersion,
                     style: UniquesControllers()
                         .data
                         .textStyleMain(color: CustomColors.mainWhite),

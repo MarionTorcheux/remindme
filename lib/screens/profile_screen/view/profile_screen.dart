@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:remindme/features/custom_app_bar/view/custom_app_bar.dart';
-import 'package:remindme/features/custom_text_button/view/custom_text_button.dart';
-import 'package:remindme/features/screen_layout/view/screen_layout.dart';
+
+import '../../../features/custom_app_bar/view/custom_app_bar.dart';
+import '../../../features/screen_layout/view/screen_layout.dart';
 import '../../../core/classes/custom_colors.dart';
-import '../../../core/classes/unique_controllers.dart';
 import '../../../core/models/user.dart';
-import '../../../core/routes/app_routes.dart';
 import '../../../features/custom_bottom_app_bar/view/custom_bottom_app_bar.dart';
 import '../../../features/custom_fab_button/view/custom_fab_button.dart';
 import '../../../features/custom_space/view/custom_space.dart';
@@ -28,12 +25,12 @@ class ProfileScreen extends StatelessWidget {
 
     return ScreenLayout(
       appBar: CustomAppBar(
-        title: 'Mon profil',
+        title: cc.titleProfileScreen,
         onPressed: () {},
         isLeadingWithCustomArrow: true,
       ),
       bottomNavigationBar: CustomBottomAppBar(
-        tag: "bottomAppBar",
+        tag: cc.tagBottomAppBarProfileScreen,
       ),
       body: Center(
         child: Container(
@@ -100,16 +97,16 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const CustomSpace(heightMultiplier: 35),
                   CustomFABButton(
-                    text: 'Déconnexion',
+                    text: cc.textButtonSignOut,
                     onPressed: () {
                       cc.signOut();
                     },
-                    tag: 'signOutButton',
+                    tag: cc.tagButtonSignOut,
                     backgroundColor: CustomColors.interaction,
                   ),
                 ]);
               } else {
-                return Text('Chargement...');
+                return Text(cc.textCharge);
               }
             },
           ),

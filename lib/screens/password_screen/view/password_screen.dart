@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:remindme/features/custom_app_bar/view/custom_app_bar.dart';
 
+import '../../../features/custom_app_bar/view/custom_app_bar.dart';
 import '../../../core/classes/custom_colors.dart';
-import '../../../core/classes/unique_controllers.dart';
 import '../../../features/custom_fab_button/view/custom_fab_button.dart';
 import '../../../features/custom_space/view/custom_space.dart';
 import '../../../features/custom_text_form_field/view/custom_text_form_field.dart';
@@ -26,10 +25,8 @@ class PasswordScreen extends StatelessWidget {
 
     return ScreenLayout(
       appBar: CustomAppBar(
-        title: 'Mot de passe oublié',
-        onPressed: () {
-          Get.back();
-        },
+        title: cc.pageTitle,
+        onPressed: () {},
         isautomaticallyImplyLeading: true,
       ),
       body: Center(
@@ -40,7 +37,7 @@ class PasswordScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(top: 30),
                 child: SvgPicture.asset(
-                  'images/forgotpass.svg',
+                  cc.svgImagePath,
                   height: 200,
                 ),
               ),

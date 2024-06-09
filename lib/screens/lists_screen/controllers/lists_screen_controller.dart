@@ -1,24 +1,35 @@
 import 'dart:io';
 import 'package:path/path.dart' as path;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:remindme/core/models/taskModel.dart';
-import 'package:remindme/features/custom_text_form_field/view/custom_text_form_field.dart';
 
+import '../../../features/custom_text_form_field/view/custom_text_form_field.dart';
 import '../../../core/classes/controller_mixin.dart';
 import '../../../core/classes/custom_colors.dart';
 import '../../../core/classes/unique_controllers.dart';
 import '../../../core/models/listModel.dart';
-import '../../../core/routes/app_routes.dart';
 import '../../../features/custom_fab_button/view/custom_fab_button.dart';
 import '../../../features/custom_icon_button/view/custom_icon_button.dart';
 import '../../../features/custom_space/view/custom_space.dart';
 
 class ListsScreenController extends GetxController with ControllerMixin {
+  String titleListsScreen = 'Mes listes';
+  String titleBottomSheetAddList = 'Ajouter une liste';
+  String tagBottomAppBarListsScreen = 'bottomAppBarListsScreen';
+  String textNoLists = 'Vous n\'avez pas encore de listes';
+  String textNoTaskInList = 'Aucune tâche dans cette liste.';
+  String titleBottomSheetModifyList = 'Modifier la liste';
+  String textTitleDeleteList = 'Confirmation';
+  String textContentDeleteList =
+      'Êtes-vous sûr de vouloir supprimer cette liste?';
+  String textActionCancelList = 'Retour';
+  String textActionDeleteList = 'Confirmer';
+  String titleSnackBarConfimation = 'Liste supprimée';
+  String textSnackBarConfimation = 'La liste a été supprimée avec succès';
+
   FirebaseFirestore firestore = UniquesControllers().data.firebaseFirestore;
   RxString selectedImagePath = ''.obs;
   TextEditingController nameController = TextEditingController();
@@ -330,7 +341,6 @@ class ListsScreenController extends GetxController with ControllerMixin {
         'imageUrl': imageUrl
       });
 
-      // Récupérer l'ID du document créé
       String docId = docRef.id;
 
       newList = ListModel(
@@ -351,17 +361,13 @@ class ListsScreenController extends GetxController with ControllerMixin {
   }
 
   Future<ListModel?> modifyList(String imageUrlList) async {
-    print('image url listtttttttttttttttttttttttt : $imageUrlList');
-
     String defaultListImage =
         "https://firebasestorage.googleapis.com/v0/b/remindme-dc6a8.appspot.com/o/pictureList%2FdefaultListImage.png?alt=media&token=3c2a78db-1114-4166-864f-95c21a8abd90";
-    String imageUrl = imageUrlList; // Utiliser l'image URL existante par défaut
+    String imageUrl = imageUrlList;
 
-    // Si l'image a été réinitialisée (via la suppression)
     if (selectedImagePath.value == '' && file.path == '') {
       imageUrl = defaultListImage;
     } else if (file.path != '') {
-      // Si un nouveau fichier a été sélectionné, téléchargez-le
       imageUrl = await uploadImage(
           file, UniquesControllers().getStorage.read('currentUserUID'));
     }

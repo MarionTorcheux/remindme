@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../core/classes/custom_colors.dart';
 import 'package:get/get.dart';
+
+import '../../../core/classes/custom_colors.dart';
 
 class ThemeController extends GetxController {
   static ThemeController get to => Get.find();

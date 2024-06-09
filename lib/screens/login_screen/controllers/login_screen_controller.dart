@@ -5,6 +5,7 @@ import '../../../core/classes/unique_controllers.dart';
 import '../../../core/routes/app_routes.dart';
 
 class LoginScreenController extends GetxController {
+  String imgTopPath = 'images/toplogin.svg';
   String pageTitle = 'Connexion';
   String emailTag = 'email';
   String emailLabel = 'Email';
@@ -23,12 +24,15 @@ class LoginScreenController extends GetxController {
   String forgotPasswordLabel = 'Mot de passe oublié ?';
   double maxWith = 350.0;
 
-  String connectionTag = 'connection';
-  String connectionLabel = 'Connexion';
+  String connexionTag = 'connexion';
+  String connexionLabel = 'Connexion';
   IconData connectionIconData = Icons.login_outlined;
 
-  String registerTag = 'register';
-  String registerLabel = 'Inscription';
+  String textNoAccountYet = 'Pas encore de compte ?';
+  String tagCreateNewAccount = 'createNewAccount';
+  String textCustomButtonCreateNewAccount = 'Créer';
+
+  String textApplicationVersion = 'Version 1.0.0';
 
   void passwordScreenOnPressed() {
     Get.toNamed(Routes.password);

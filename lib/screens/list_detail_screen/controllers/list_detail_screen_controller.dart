@@ -12,6 +12,22 @@ import '../../../features/custom_text_form_field/view/custom_text_form_field.dar
 import 'date_picker_controller.dart';
 
 class ListDetailScreenController extends GetxController with ControllerMixin {
+  String bottomSheetTitleAddTask = 'Ajouter une tâche';
+  String titleListDetailScreen = 'Détails de la liste';
+  String tagBottomAppBarListDetailScreen = 'bottom-app-bar-list-detail-screen';
+  String textNoTask = 'Aucune tâche dans cette liste.';
+  String tagCustomIconButtonModifyTask = 'modify-task';
+  String titleBottomSheetModifyTask = 'Modifier la tâche';
+  String tagCustomIconButtonDeleteTask = 'delete-task';
+  String titleAlertDialogDeleteConfirmation = 'Confirmation';
+  String contentAlertDialogDeleteConfirmation =
+      'Voulez-vous vraiment supprimer cette tâche ?';
+  String cancelAlertDialogDeleteConfirmation = 'Retour';
+  String confirmAlertDialogDeleteConfirmation = 'Confirmer';
+  String titleSnackBarDeleteConfirmation = 'Tâche supprimée';
+  String contentSnackBarDeleteConfirmation =
+      'La tâche a été supprimée avec succès.';
+
   late RxString listId = ''.obs;
   var listTasks = <TaskModel>[].obs;
 
