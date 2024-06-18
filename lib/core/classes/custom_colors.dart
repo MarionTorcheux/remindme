@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class CustomColors {
   static const LinearGradient backgroundGradient = LinearGradient(
-    begin: Alignment.topCenter, // Commence par le haut
-    end: Alignment(0.0, 0.6), // Termine à 60% de la hauteur de l'écran
+    begin: Alignment.topCenter,
+    end: Alignment(0.0, 0.6),
     colors: [mainWhite, mainBlue],
   );
 
