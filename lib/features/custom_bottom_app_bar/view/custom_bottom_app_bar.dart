@@ -15,7 +15,7 @@ class CustomBottomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CustomBottomAppBarController cc = Get.put(
+    final CustomBottomAppBarController cc = Get.put(
       CustomBottomAppBarController(),
       tag: tag,
     );
@@ -28,7 +28,7 @@ class CustomBottomAppBar extends StatelessWidget {
           IconButton(
             icon: Icon(
               Icons.home,
-              color: CustomColors.darkBlue,
+              color: _getIconColor(cc, Routes.lists),
               size: 30,
             ),
             onPressed: () {
@@ -38,7 +38,7 @@ class CustomBottomAppBar extends StatelessWidget {
           IconButton(
             icon: Icon(
               Icons.share,
-              color: CustomColors.darkBlue,
+              color: _getIconColor(cc, Routes.sharedlists),
               size: 30,
             ),
             onPressed: () {
@@ -48,7 +48,7 @@ class CustomBottomAppBar extends StatelessWidget {
           IconButton(
             icon: Icon(
               Icons.schedule,
-              color: CustomColors.darkBlue,
+              color: _getIconColor(cc, Routes.history),
               size: 30,
             ),
             onPressed: () {
@@ -58,7 +58,7 @@ class CustomBottomAppBar extends StatelessWidget {
           IconButton(
             icon: Icon(
               Icons.person,
-              color: CustomColors.darkBlue,
+              color: _getIconColor(cc, Routes.profile),
               size: 30,
             ),
             onPressed: () {
@@ -68,5 +68,9 @@ class CustomBottomAppBar extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color _getIconColor(CustomBottomAppBarController cc, String route) {
+    return cc.currentRoute == route ? CustomColors.darkBlue : Colors.grey;
   }
 }
