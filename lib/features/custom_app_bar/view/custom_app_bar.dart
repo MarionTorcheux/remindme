@@ -35,9 +35,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: isautomaticallyImplyLeading,
       backgroundColor: CustomColors.mainBlue,
+      iconTheme: const IconThemeData(color: CustomColors.mainWhite),
       leading: isLeadingWithCustomArrow
           ? IconButton(
-              icon: const Icon(Icons.arrow_back),
+              icon: const Icon(
+                Icons.arrow_back,
+                color: CustomColors.mainWhite,
+              ),
               onPressed: () {
                 Get.offNamed(Routes.lists);
               },

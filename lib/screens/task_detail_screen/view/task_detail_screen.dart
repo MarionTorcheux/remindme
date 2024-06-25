@@ -6,7 +6,9 @@ import '../../../../../features/screen_layout/view/screen_layout.dart';
 import '../../../../../core/classes/custom_colors.dart';
 import '../../../../../features/custom_bottom_app_bar/view/custom_bottom_app_bar.dart';
 import '../../../../../features/custom_space/view/custom_space.dart';
+import '../../../core/classes/unique_controllers.dart';
 import '../../../features/custom_fab_button/view/custom_fab_button.dart';
+import '../../../features/custom_icon_button/view/custom_icon_button.dart';
 import '../controllers/task_detail_screen_controller.dart';
 
 class TaskDetailScreen extends StatelessWidget {
@@ -121,11 +123,64 @@ class TaskDetailScreen extends StatelessWidget {
                     CustomSpace(heightMultiplier: 3.0),
                     Container(
                       width: 320.0,
-                      child: CustomFABButton(
-                        text: 'Supprimer',
-                        onPressed: () {},
-                        tag: 'deleteButton',
-                        backgroundColor: CustomColors.interaction,
+                      // child: CustomFABButton(
+                      //   text: 'Supprimer',
+                      //   onPressed: () {
+                      //     cc.deleteTask(taskId);
+                      //     Get.back();
+                      //   },
+                      //   tag: 'deleteButton',
+                      //   backgroundColor: CustomColors.interaction,
+                      // ),
+                      child: CustomIconButton(
+                        tag: 'tag',
+                        onPressed: () async {
+                          bool shouldDelete = await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Supprimer la tâche ?'),
+                                content: Text(
+                                    'Voulez-vous vraiment supprimer cette tâche ?'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop(false);
+                                    },
+                                    child: Text('Annuler',
+                                        style: TextStyle(
+                                            color: CustomColors.mainBlue)),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop(true);
+
+                                      Get.toNamed('/lists');
+                                    },
+                                    child: Text(
+                                      'Supprimer',
+                                      style: TextStyle(
+                                          color: CustomColors.interaction),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+
+                          if (shouldDelete) {
+                            bool isDeleted = await cc.deleteTask(task.id);
+                            if (isDeleted) {
+                              UniquesControllers().data.snackbar(
+                                    'Tâche supprimée',
+                                    'La tâche a été supprimée avec succès',
+                                    false,
+                                  );
+                            }
+                          }
+                        },
+                        iconData: Icons.delete,
+                        iconColor: Colors.red,
                       ),
                     ),
                   ],

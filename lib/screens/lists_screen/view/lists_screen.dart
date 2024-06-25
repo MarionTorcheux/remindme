@@ -50,16 +50,7 @@ class ListsScreen extends StatelessWidget {
                       cc.lists
                           .sort((a, b) => b.createdAt.compareTo(a.createdAt));
                     }),
-                    cc.textButtonFilter(1, 'À faire', () {
-                      cc.lists.sort((a, b) {
-                        int aCount =
-                            a.tasks.where((task) => !task.state.value).length;
-                        int bCount =
-                            b.tasks.where((task) => !task.state.value).length;
-                        return aCount.compareTo(bCount);
-                      });
-                    }),
-                    cc.textButtonFilter(2, 'Terminé', () {
+                    cc.textButtonFilter(2, 'Partagées', () {
                       ;
                       cc.lists.sort((a, b) {
                         int aCount =

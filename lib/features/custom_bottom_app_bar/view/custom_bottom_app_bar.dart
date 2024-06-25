@@ -37,16 +37,6 @@ class CustomBottomAppBar extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(
-              Icons.share,
-              color: _getIconColor(cc, Routes.sharedlists),
-              size: 30,
-            ),
-            onPressed: () {
-              Get.offNamed(Routes.sharedlists);
-            },
-          ),
-          IconButton(
-            icon: Icon(
               Icons.schedule,
               color: _getIconColor(cc, Routes.history),
               size: 30,

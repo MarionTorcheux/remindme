@@ -41,7 +41,7 @@ class ScreenLayout extends StatelessWidget {
               color: CustomColors.mainBlue.withOpacity(0.9),
               width: Get.width,
               height: Get.height,
-              child: const CustomLoader(),
+              child: CustomLoader(),
             ),
           ),
         ],

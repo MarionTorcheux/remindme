@@ -46,6 +46,15 @@ class PasswordScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Text(
+                    'Entrez votre adresse email pour recevoir un lien de réinitialisation de mot de passe.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const CustomSpace(heightMultiplier: 4),
                   CustomTextFormField(
                     tag: cc.emailTag,
                     controller: cc.emailController,

@@ -100,6 +100,8 @@ mixin ControllerMixin on GetxController {
           tempLists.add(ListModel.fromDocument(doc, tasks));
         }
 
+        tempLists.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
         lists.value = tempLists;
       } catch (error) {
         print("Failed to get lists: $error");

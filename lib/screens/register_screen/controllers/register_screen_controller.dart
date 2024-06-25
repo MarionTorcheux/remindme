@@ -14,7 +14,7 @@ import '../../../core/routes/app_routes.dart';
 class RegisterScreenController extends GetxController with ControllerMixin {
   String pageTitle = 'Créer un compte';
   String tagIconButton = 'register-icon-button';
-  String textProfilePicture = 'Photo de profil';
+  String textProfilePicture = 'Ajouter une photo de profil';
   TextStyle textStyleLabelRegister = TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: 20,

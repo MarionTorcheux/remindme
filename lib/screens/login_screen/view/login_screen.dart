@@ -86,14 +86,16 @@ class LoginScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(cc.textNoAccountYet,
-                          style: UniquesControllers()
-                              .data
-                              .textStyleMain(color: CustomColors.mainWhite)),
+                      Text(
+                        cc.textNoAccountYet,
+                        style: UniquesControllers()
+                            .data
+                            .textStyleMain(color: CustomColors.darkBlue),
+                      ),
                       CustomTextButton(
                         tag: cc.tagCreateNewAccount,
                         text: cc.textCustomButtonCreateNewAccount,
-                        color: CustomColors.darkBlue,
+                        color: CustomColors.mainWhite,
                         onPressed: () {
                           cc.registerScreenOnPressed();
                         },
@@ -101,12 +103,6 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                   const CustomSpace(heightMultiplier: 2),
-                  Text(
-                    cc.textApplicationVersion,
-                    style: UniquesControllers()
-                        .data
-                        .textStyleMain(color: CustomColors.mainWhite),
-                  ),
                 ],
               ),
             ),

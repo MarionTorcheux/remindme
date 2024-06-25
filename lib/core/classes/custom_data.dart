@@ -36,7 +36,7 @@ class CustomData extends GetxController {
   }
 
   Widget loader() {
-    return const Center(
+    return Center(
       child: CustomLoader(
         color: CustomColors.mainBlue,
       ),

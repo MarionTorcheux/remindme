@@ -71,6 +71,7 @@ class RegisterScreen extends StatelessWidget {
                   cc.textProfilePicture,
                   style: cc.textStyleLabelRegister,
                 ),
+                const CustomSpace(heightMultiplier: 2),
                 CustomTextFormField(
                   tag: cc.nameTag,
                   controller: cc.nameController,

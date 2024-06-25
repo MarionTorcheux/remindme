@@ -205,6 +205,9 @@ class ListDetailScreenController extends GetxController with ControllerMixin {
                             ),
                             child: InputDecorator(
                               decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 10.0,
+                                ),
                                 border: InputBorder.none,
                               ),
                               child: DropdownButtonHideUnderline(
@@ -213,7 +216,8 @@ class ListDetailScreenController extends GetxController with ControllerMixin {
                                   elevation: 16,
                                   style: TextStyle(
                                       color: CustomColors.mainBlue,
-                                      fontSize: 16),
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600),
                                   items: items.map((String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
@@ -229,15 +233,95 @@ class ListDetailScreenController extends GetxController with ControllerMixin {
                           ),
                         ),
                         const CustomSpace(heightMultiplier: 2),
-                        Obx(() => Text(
-                              'Date sélectionnée : ${datePickerController.selectedDate.value.toLocal()}'
-                                  .split(' ')[0],
-                            )),
-                        SizedBox(height: 20.0),
-                        ElevatedButton(
-                          onPressed: () =>
-                              datePickerController.selectDate(Get.context!),
-                          child: Text('Sélectionner une date'),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Date de début :  ',
+                              style: TextStyle(
+                                color: CustomColors.mainBlue,
+                                fontSize: 13,
+                              ),
+                            ),
+                            Obx(
+                              () => SizedBox(
+                                width: 160.0,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: CustomColors.darkBlue,
+                                    backgroundColor: CustomColors.mainWhite,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10.0),
+                                  ),
+                                  onPressed: () => datePickerController
+                                      .selectDate(Get.context!),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '${_formatDate(datePickerController.selectedDate.value)}',
+                                        style: TextStyle(
+                                          color: CustomColors.darkBlue,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                      Icon(Icons.calendar_month,
+                                          color: CustomColors.darkBlue),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Date de fin :  ',
+                              style: TextStyle(
+                                color: CustomColors.mainBlue,
+                                fontSize: 13,
+                              ),
+                            ),
+                            Obx(
+                              () => SizedBox(
+                                width: 160.0,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: CustomColors.darkBlue,
+                                    backgroundColor: CustomColors.mainWhite,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10.0),
+                                  ),
+                                  onPressed: () => datePickerController
+                                      .selectDate(Get.context!),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '${_formatDate(datePickerController.selectedDate.value)}',
+                                        style: TextStyle(
+                                          color: CustomColors.darkBlue,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                      Icon(Icons.calendar_month,
+                                          color: CustomColors.darkBlue),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         const CustomSpace(heightMultiplier: 2),
                         Visibility(
@@ -279,5 +363,12 @@ class ListDetailScreenController extends GetxController with ControllerMixin {
       ),
       isScrollControlled: true,
     );
+  }
+
+  String _formatDate(DateTime date) {
+    String day = date.day.toString().padLeft(2, '0');
+    String month = date.month.toString().padLeft(2, '0');
+    String year = date.year.toString();
+    return '$day/$month/$year';
   }
 }

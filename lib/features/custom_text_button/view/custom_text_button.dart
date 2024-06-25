@@ -33,7 +33,11 @@ class CustomTextButton extends StatelessWidget {
       child: Text(
         text,
         style: GoogleFonts.poppins(
-            fontSize: fontSize, fontWeight: FontWeight.w600),
+          fontSize: fontSize,
+          fontWeight: FontWeight.w600,
+          decoration: TextDecoration.underline,
+          decorationColor: baseColor,
+        ),
       ),
     );
   }
